@@ -1,0 +1,91 @@
+openapi: 3.1.0
+info:
+  title: openapi
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /product:
+    parameters: []
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Product
+      x-internal: false
+      tags:
+        - Product
+  /product/detail:
+    get:
+      summary: Get Product Detail
+      tags:
+        - Product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-product-detail
+components:
+  schemas:
+    Error:
+      title: Response
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    Product:
+      title: Product
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+  responses:
+    '400':
+      description: Input is invalid data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: An error occurs at server side
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
