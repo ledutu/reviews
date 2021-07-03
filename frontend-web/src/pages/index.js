@@ -2,8 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../styles/Home.module.css";
+import "./../scss/Home.module.scss";
 import { fetchPosts } from "./../store/actions/postAction";
+import Header from "./../containers/home/header";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -14,11 +15,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      {posts &&
-        posts.map((item) => {
-          return <h1 key={item}>{item}</h1>;
-        })}
-    </div>
+    <>
+      <div id="carousel">
+        <div className="wrapper">
+          <div className="container">
+            <h3>Every Review is an Experience!</h3>
+            <p>Check Ratings of Businesses, Read Reviews &amp; Buy</p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
