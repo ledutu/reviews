@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const { AuthController } = require('../controllers');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render('openapi/index')
-});
+router.get('/', AuthController.index);
 
 module.exports = router;

@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+var mongoose = require('mongoose');
+require('dotenv').config()
 
 var apiRouter = require('./src/routes');
 
@@ -31,6 +33,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/src/public')));
 app.use('/axios', express.static(path.join(__dirname, 'node_modules', 'axios')));
+
+const { DB_HOST, DB_PORT, DB_NAME, ACCESS_TIMEOUT, MONGODB_URL } = process.env;
+
+// const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const mongoUrl = MONGODB_URL;
+
+const db = mongoose.connection;
+
+const connectWithRetry = function () {
+    return mongoose.connect(mongoUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }, (err) => {
+        if (err) {
+            console.error('Failed to connect to mongo on startup - retrying in 5 sec', err)
+            setTimeout(connectWithRetry, ACCESS_TIMEOUT)
+        }
+    })
+}
+connectWithRetry()
+
+db.on('connected', () => {
+    console.log('Connect DB Successful');
+})
 
 //Router
 app.use('/api', apiRouter);
