@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./../scss/Home.module.scss";
 import { fetchPosts } from "./../store/actions/postAction";
 import Header from "./../containers/home/header";
-
+import Categories from "./../containers/home/categories";
 export default function Home() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.postReducer);
@@ -43,6 +43,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Categories />
     </>
   );
 }
