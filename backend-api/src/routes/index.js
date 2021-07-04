@@ -7,8 +7,12 @@ var reaction = require('./reaction.route');
 var review = require('./review.route');
 var user = require('./user.route');
 var config = require('./config.route');
+var { Auth } = require('../middlewares');
 
 router.use('/auth', auth);
+
+router.use(Auth.auth);
+
 router.use('/comment', comment);
 router.use('/history', history);
 router.use('/reaction', reaction);

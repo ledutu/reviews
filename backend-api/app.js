@@ -5,9 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 require('dotenv').config()
 
 var apiRouter = require('./src/routes');
+var databaseRouter = require('./src/database/seed/seed.route');
 
 var app = express();
 
@@ -30,6 +32,9 @@ app.use(
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/src/public')));
 app.use('/axios', express.static(path.join(__dirname, 'node_modules', 'axios')));
@@ -42,23 +47,25 @@ const mongoUrl = MONGODB_URL;
 const db = mongoose.connection;
 
 const connectWithRetry = function () {
-    return mongoose.connect(mongoUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }, (err) => {
-        if (err) {
-            console.error('Failed to connect to mongo on startup - retrying in 5 sec', err)
-            setTimeout(connectWithRetry, ACCESS_TIMEOUT)
-        }
-    })
+  return mongoose.connect(mongoUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  }, (err) => {
+    if (err) {
+      console.error('Failed to connect to mongo on startup - retrying in 5 sec', err)
+      setTimeout(connectWithRetry, ACCESS_TIMEOUT)
+    }
+  })
 }
 connectWithRetry()
 
 db.on('connected', () => {
-    console.log('Connect DB Successful');
+  console.log('Connect DB Successful');
 })
 
 //Router
+app.use('/database/create-database', databaseRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
