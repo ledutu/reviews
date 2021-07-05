@@ -1,0 +1,183 @@
+$bg_white: #fff;
+$cl_white: #fff;
+$cl_black: #000;
+$cl_dark: rgb(26, 25, 25);
+$_5: 5px;
+$_8: 8px;
+$_10: 10px;
+$_20: 20px;
+$_30: 30px;
+$_45: 45px;
+$_75: 75px;
+$fs_1: 3.25rem;
+$fs_2: 3rem;
+$fs_3: 2.75rem;
+$fs_4: 2.5rem;
+$fs_5: 2.25rem;
+$fs_6: 2rem;
+$txt_2: 1.5rem;
+$txt_1: 1.25rem;
+$txt: 1rem;
+$fw_l: 300;
+$fw_b: 500;
+$fw_h: 700;
+
+@mixin reset_mp {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  @include reset_mp;
+  // font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  //   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: #eef3f7;
+  font-size: 1rem;
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: "Roboto", Arial, sans-serif;
+  color: #555;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.4;
+  color: inherit;
+}
+
+// HomePage
+#header {
+  transition: all 0.2s ease-in-out;
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: $_20 $_30;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+
+  .header_wrapper {
+    display: flex;
+    justify-content: space-around;
+    div,
+    nav {
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 9;
+      width: auto;
+      color: #fff;
+      ul {
+        list-style: none;
+        position: relative;
+        display: inline-block;
+        @include reset_mp;
+        li {
+          position: relative;
+          display: inline-block;
+          @include reset_mp;
+          a {
+            color: $cl_white;
+            padding: $_8 $_10;
+            //font-size: 14px;
+            font-size: $txt_1;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+#header.sticky {
+  transition: all 0.3s ease-in-out;
+  border-bottom: 1px solid #ededed;
+  background-color: $bg_white;
+  padding: $_10 $_20;
+  nav {
+    ul {
+      li {
+        a {
+          color: $cl_dark;
+        }
+      }
+    }
+  }
+}
+
+#carousel {
+  height: 620px;
+
+  background: url("./../assets/home_image_laptop_and_credit_card.jpg") top
+    center no-repeat fixed;
+  background-size: cover;
+
+  color: $cl_white;
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.6);
+    .container {
+      text-align: center;
+      h1 {
+        font-size: $fs_1;
+        text-shadow: 4px 4px 12px rgb(0 0 0 / 30%);
+        margin: 0;
+      }
+      p {
+        font-weight: 400;
+        margin: 0 0 $_10 0;
+        padding: 0;
+        //font-size: 20px;
+        font-size: $txt_2;
+        text-shadow: 4px 4px 12px rgb(0 0 0 / 30%);
+      }
+    }
+  }
+}
+
+#categories {
+  .categories_wrapper {
+    padding: $_75;
+
+    h3 {
+      font-size: $fs_3;
+
+      margin-bottom: $_45;
+    }
+    .top_categories {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      row-gap: $_20;
+      .category {
+        width: 320px;
+        height: 180px;
+      }
+    }
+  }
+}
