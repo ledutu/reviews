@@ -82,6 +82,10 @@ cd scripts
 ```
 bash create-db.sh <collection> <number of document> <locale>
 ```
+__Or__
+```
+./create-db.sh <collection> <number of document> <locale>
+```
 
 **For Linux/Ubuntu**
 * Step 1: Open git bash where we can run script file.
