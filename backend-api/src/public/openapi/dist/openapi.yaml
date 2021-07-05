@@ -3,67 +3,502 @@ info:
   title: openapi
   version: '1.0'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:4000/api'
 paths:
-  /product:
+  /auth/login:
     parameters: []
+    post:
+      summary: post-auth-login
+      operationId: post-auth-login
+      responses:
+        '200':
+          description: Login Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+            examples:
+              Account 1:
+                value:
+                  email: catharine.gibson@yahoo.com
+                  password: efccaz
+      description: Login with email and password.
+  /user/me:
     get:
+      summary: get-user-me
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/User'
+          headers: {}
+        '401':
+          $ref: '#/components/responses/401'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      summary: Product
-      x-internal: false
+          $ref: '#/components/responses/500'
+      operationId: get-user-me
+      parameters: []
+      description: Get user detail.
       tags:
-        - Product
-  /product/detail:
+        - User
+      security:
+        - Authorization: []
+    parameters: []
+  /user/logout:
     get:
-      summary: Get Product Detail
-      tags:
-        - Product
+      summary: get-user-logout
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                type: object
+                properties:
+                  code:
+                    type: string
+              examples:
+                Successful:
+                  value:
+                    code: OK
+        '401':
+          $ref: '#/components/responses/401'
         '500':
-          description: Internal Server Error
+          $ref: '#/components/responses/500'
+      operationId: get-user-logout
+      tags:
+        - User
+      description: Logout
+      parameters: []
+      security:
+        - Authorization: []
+  /review/category:
+    get:
+      summary: get-review-category
+      tags:
+        - Review
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-      operationId: get-product-detail
+                $ref: '#/components/schemas/ReviewPaginate'
+        '500':
+          $ref: '#/components/responses/500'
+      operationId: get-review-category
+      description: Get review with category
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: category_id
+          description: If category_id does not exists. Api will return all review in all category
+        - schema:
+            type: string
+          in: query
+          name: page
+          description: current page
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: number of review per page
+  '/review/{id}':
+    get:
+      summary: get-review
+      tags:
+        - Review
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '500':
+          $ref: '#/components/responses/500'
+      operationId: get-review
+      description: Get review detail
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: review id
+    put:
+      summary: put-review-id
+      operationId: put-review-id
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      parameters: []
+      description: Edit review post
+      security:
+        - Authorization: []
+      tags:
+        - Review
+    delete:
+      summary: delete-review-id
+      operationId: delete-review-id
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      parameters: []
+      description: Delete review post
+      security:
+        - Authorization: []
+      tags:
+        - Review
+  '/comment/{review_id}':
+    get:
+      summary: get-comment
+      tags:
+        - Comment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentPaginate'
+        '500':
+          $ref: '#/components/responses/500'
+      operationId: get-comment
+      description: Get all comment in review post
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: page
+          description: Current Page
+        - schema:
+            type: number
+          in: query
+          name: limit
+          description: Number of comment per page
+    parameters:
+      - schema:
+          type: string
+        name: review_id
+        in: path
+        required: true
+        description: Review ID
+    post:
+      summary: post-comment-review_id
+      operationId: post-comment-review_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      description: Write comment
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+        description: Content
+      security:
+        - Authorization: []
+      tags:
+        - Comment
+    put:
+      summary: put-comment-review_id
+      operationId: put-comment-review_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                comment_id:
+                  type: string
+                content:
+                  type: string
+      security:
+        - Authorization: []
+      tags:
+        - Comment
+    delete:
+      summary: delete-comment-review_id
+      operationId: delete-comment-review_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                comment_id:
+                  type: string
+        description: Comment ID
+      security:
+        - Authorization: []
+      tags:
+        - Comment
+  '/reaction/rate/{review_id}':
+    parameters:
+      - schema:
+          type: string
+        name: review_id
+        in: path
+        required: true
+        description: Review
+    post:
+      summary: post-reaction-rate-review_id
+      operationId: post-reaction-rate-review_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  new_rate:
+                    type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                rate:
+                  type:
+                    - string
+                    - number
+                    - integer
+      description: Rate review post
+      security:
+        - Authorization: []
+      tags:
+        - Reaction
 components:
   schemas:
     Error:
       title: Response
       type: object
       properties:
-        status:
+        code:
           type: string
         message:
           type: string
-    Product:
+    LoginResponse:
       title: Product
       type: object
       properties:
-        id:
+        user:
+          type: string
+        access_token:
+          type: string
+    User:
+      title: User
+      type: object
+      properties:
+        _id:
+          type: string
+        profile:
+          $ref: '#/components/schemas/Profile'
+        google_id:
+          type: string
+        facebook_id:
+          type: string
+        email:
+          type: string
+    Profile:
+      title: Profile
+      type: object
+      properties:
+        username:
+          type: string
+        full_name:
+          type: string
+        address:
+          type: string
+        image:
+          type: string
+        gender:
+          type: string
+        birthday:
+          type: string
+    Review:
+      title: Review
+      type: object
+      properties:
+        _id:
+          type: string
+        image:
+          type: string
+        slug:
+          type: string
+        rate:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        reviewer:
+          type:
+            - string
+            - object
+          properties:
+            profile:
+              $ref: '#/components/schemas/Profile'
+            _id:
+              type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    ReviewPaginate:
+      title: ReviewPaginate
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        total_page:
+          type: number
+        page:
+          type: number
+        limit:
+          type: number
+    Comment:
+      title: Comment
+      type: object
+      properties:
+        _id:
+          type: string
+        user:
+          type: object
+          properties:
+            profile:
+              $ref: '#/components/schemas/Profile'
+            _id:
+              type: string
+        content:
+          type: string
+        review:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Category:
+      title: Category
+      type: object
+      properties:
+        _id:
           type: string
         name:
           type: string
-        description:
+        short_name:
           type: string
+        tag_color:
+          type: string
+    CommentPaginate:
+      title: CommentPaginate
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        total_page:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        total_page:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
   responses:
     '400':
       description: Input is invalid data
@@ -71,21 +506,46 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                code: INVALID_INPUT
+                message: string
     '401':
       description: unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                code: UN_AUTHORIZED
+                message: string
     '404':
       description: Not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                code: NOT_FOUND
+                message: string
     '500':
       description: An error occurs at server side
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                code: SERVER_ERROR
+                message: string
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+      description: Basic login with bearer token
