@@ -1,0 +1,50 @@
+version: "3.9"
+
+#NETWORD
+networks: 
+    reviews-network:
+        name: reviews-network
+        driver: bridge
+
+services: 
+    db:
+        image: mongo:4.4.6
+        networks: 
+            - reviews-network
+        volumes: 
+            - ../backend-api/docker/mongo/:/data/db/
+        ports: 
+            - "27018:27017"
+            
+    backend-api:
+        image: backend-api-image
+        networks: 
+            - reviews-network
+        volumes: 
+            - ../backend-api/:/usr/src/backend-api
+        ports: 
+            - 4000:4000
+        environment: 
+            - DB_NAME=reviews
+            - DB_PORT=27017
+            - DB_HOST=db
+            - ACCESS_TIMEOUT=3000
+            - PORT=4000
+        depends_on: 
+            - db
+            
+    frontend-web:
+        image: frontend-web-image
+        networks: 
+            - reviews-network
+        volumes: 
+            - ../frontend-web/:/usr/src/frontend-web
+        ports: 
+            - 3000:3000
+        environment: 
+            - PORT=3000
+        depends_on: 
+            - db
+            - backend-api
+            
+        

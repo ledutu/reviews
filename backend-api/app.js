@@ -41,8 +41,8 @@ app.use('/axios', express.static(path.join(__dirname, 'node_modules', 'axios')))
 
 const { DB_HOST, DB_PORT, DB_NAME, ACCESS_TIMEOUT, MONGODB_URL } = process.env;
 
-// const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-const mongoUrl = MONGODB_URL;
+const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+// const mongoUrl = MONGODB_URL;
 
 const db = mongoose.connection;
 

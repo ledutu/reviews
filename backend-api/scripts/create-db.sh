@@ -4,7 +4,7 @@
 # Username: ledutu
 # Script will be showed below:
 
-API_URL=http://localhost:3000/database/create-database
+API_URL=http://localhost:4000/database/create-database
 
 TYPE=$1
 TIMES=$2
