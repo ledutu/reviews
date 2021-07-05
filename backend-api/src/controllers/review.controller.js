@@ -33,7 +33,7 @@ async function getReviewWithCategory(request, response) {
         reviews = await reviews
             .sort({ createdAt: -1 })
             .select(['-is_confirm', '-is_hide', '-is_block'])
-            .populate('category', ['short_name', 'tag_color'])
+            .populate('category', ['short_name', 'tag_color', 'name'])
             .skip((page * limit) - limit)
             .limit(limit)
             .lean();
@@ -55,11 +55,28 @@ async function getReviewWithCategory(request, response) {
     }
 }
 
-function getReviewDetail(request, response) {
+async function getReviewDetail(request, response) {
     try {
+        const { id } = request.params;
         
-    } catch (error) {
+        review = await Review.findOne({
+            _id: id,
+            is_confirm: true,
+            is_hide: false,
+        }).select([
+            '-is_confirm', '-is_hide', '-is_block'
+        ]).populate('category', ['name', 'short_name', 'tag_color'])
+        .populate('reviewer', ['profile']);
         
+        if(!review) {
+            let err = new Error();
+            err.code = HTTP_TEXT.NOT_FOUND;
+            throw err;
+        }
+        
+        return response.status(HTTP_STATUS.OK).json(review);
+    } catch (err) {
+        return response.status(HTTP_STATUS.SERVER_ERROR).json(error(err.code));
     }
 }
 

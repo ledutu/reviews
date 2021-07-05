@@ -166,15 +166,14 @@ async function createReaction(times = 5, language) {
     reactions = [];
 
     const users = await User.find({}).select('_id').limit(times);
-    const books = await Review.find({}).select('_id').limit(times);
+    const reviews = await Review.find({}).select('_id').limit(times);
 
     for (let i = 0; i < times; i++) {
         _id = faker.helpers.randomize(users)._id;
-        review_id = faker.helpers.randomize(books)._id
+        review_id = faker.helpers.randomize(reviews)._id;
         rate = faker.helpers.randomize([1, 2, 3, 4, 5]);
         
         vote = await Reaction.findOne({
-            type: 'book',
             user: _id,
             review_id: review_id,
         });
@@ -197,11 +196,11 @@ async function createReaction(times = 5, language) {
  * @function calculateRating
  */
 async function calculateRating() {
-    reviews = await Review.find({}).select(['vote']);
+    reviews = await Review.find({}).select(['rate']);
 
     reviews.forEach(async review => {
         let mean = await getMean(review._id);
-        review.vote = mean;
+        review.rate = mean;
         await review.save();
     });
 }

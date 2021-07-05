@@ -131,7 +131,7 @@ async function createReaction(request, response) {
         seeders = await Seeder.createReaction(times, locale);
         console.log("Reaction database: ");
 
-        await Reaction.insertMany(seeders.reaction);
+        await Reaction.insertMany(seeders.reactions);
 
         console.info('Create Reaction database successful');
         response.status(200).json({
