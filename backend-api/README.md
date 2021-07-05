@@ -80,7 +80,7 @@ cd scripts
 ```
 * Step 3: Run script file.
 ```
-./create-db.sh <collection> <number of document> <locale>
+bash create-db.sh <collection> <number of document> <locale>
 ```
 
 **For Linux/Ubuntu**
