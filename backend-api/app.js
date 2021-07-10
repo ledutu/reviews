@@ -39,9 +39,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/src/public')));
 app.use('/axios', express.static(path.join(__dirname, 'node_modules', 'axios')));
 
-const { DB_HOST, DB_PORT, DB_NAME, ACCESS_TIMEOUT, MONGODB_URL } = process.env;
+const {
+  DB_HOST,
+  DB_PORT,
+  DB_NAME,
+  ACCESS_TIMEOUT,
+  MONGODB_URL,
+  DB_USERNAME,
+  DB_PASSWORD
+} = process.env;
 
-const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const mongoUrl = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=${DB_NAME}`;
+
+console.log(mongoUrl)
 // const mongoUrl = MONGODB_URL;
 
 const db = mongoose.connection;

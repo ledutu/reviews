@@ -3,7 +3,7 @@ info:
   title: openapi
   version: '1.0'
 servers:
-  - url: 'http://localhost:4000/api'
+  - url: 'http://reviewduthu/api'
 paths:
   /auth/login:
     parameters: []
