@@ -3,7 +3,7 @@ info:
   title: openapi
   version: '1.0'
 servers:
-  - url: 'http://reviewduthu/api'
+  - url: 'http://api.reviewduthu.vn/api'
 paths:
   /auth/login:
     parameters: []
