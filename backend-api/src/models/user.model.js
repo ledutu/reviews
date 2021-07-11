@@ -30,7 +30,7 @@ const userSchema = new Schema({
 }, { timestamps: { currentTime: () => Date.now() } });
 
 //Create new function
-userSchema.statics.authenticate = async function (email, password, callbackResult, callbackErr) {
+userSchema.statics.authenticate = async function (email, password, isAdmin, callbackResult, callbackErr) {
     User.findOne({ email }).select([
         'google_id', 'facebook_id', 'tokens'
     ]).exec(async function (err, user) {
@@ -67,6 +67,8 @@ userSchema.statics.authenticate = async function (email, password, callbackResul
         userPassword = await User.findById(user._id).select(['password']);
         bcrypt.compare(password, userPassword.password, async function (err, result) {
             if (result) {
+                if(isAdmin) return callbackResult(user);
+                
                 let token = jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
                     expiresIn: '30d'
                 });
