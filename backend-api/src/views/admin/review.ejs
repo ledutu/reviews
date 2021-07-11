@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
-<meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
-<title>Trang chủ</title>
 
-<!-- ========== Css Files ========== -->
-<%- include('layouts/head') %> 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
+    <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+    <title>Trang chủ</title>
+
+    <!-- ========== Css Files ========== -->
+    <%- include('layouts/head') %>
 
 
 </head>
+
 <body>
     <!-- Start Page Loading -->
-    <%- include('layouts/loading') %> 
+    <%- include('layouts/loading') %>
     <!-- End Page Loading -->
 
     <!-- START TOP -->
-    <%- include('layouts/header') %> 
+    <%- include('layouts/header') %>
     <!-- END TOP -->
 
     <!-- START SIDEBAR -->
-    <%- include('layouts/sidebar') %> 
+    <%- include('layouts/sidebar') %>
     <!-- END SIDEBAR -->
-    
-    <%- include('layouts/notification') %> 
+
+    <%- include('layouts/notification') %>
 
     <!-- START CONTENT -->
     <div class="content">
@@ -49,37 +52,41 @@
         <!-- End Page Header -->
 
         <div class="container-flush">
-            
+
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="panel panel-default">
-                
+
                         <div class="panel-title">
                             Tìm kiếm
                             <ul class="panel-tools">
-                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
-                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
-                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
                             </ul>
                         </div>
-                
+
                         <div class="panel-body">
                             <form action="#" method="GET">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-6">
                                         <div class="form-group">
                                             <label for="input1" class="form-label">Tiêu đề</label>
-                                            <input type="text" placeholder="Tiêu đề" name="blog_name" class="form-control" id="input1" value="<%- params.blog_name %>">
-                                        </div>            
+                                            <input type="text" placeholder="Tiêu đề" name="title" class="form-control"
+                                                id="input1" value="<%- params.title %>">
+                                        </div>
                                     </div>
-                                    
+
                                     <div class="col-md-12 col-lg-6">
                                         <div class="form-group">
                                             <label class="form-label">Thể loại</label>
-                                            <select class="form-control selectpicker" name="tag" multiple data-live-search="true">
+                                            <select class="form-control selectpicker" name="category" multiple
+                                                data-live-search="true">
                                                 <% reviewCategories.forEach(category => { %>
-                                                    <option value="<%- category._id %>" <%- params.category && params.category.equals(category._id) && 'selected' %> ><%- category.name %></option>
-                                                <% }) %>                                                    
+                                                <option value="<%- category._id %>"
+                                                    <%- params.category && params.category.includes(category._id.toString()) && 'selected' %>>
+                                                    <%- category.name %></option>
+                                                <% }) %>
                                             </select>
                                         </div>
                                     </div>
@@ -87,42 +94,78 @@
                                 
                                 <div class="row">
                                     <div class="col-md-12 col-lg-6">
-                                        <fieldset>
-                                            <div class="control-group">
-                                                <label for="input1" class="form-label">Từ ngày</label>
-                                                <div class="controls">
-                                                    <div class="input-prepend input-group">
-                                                        <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input type="text" id="date-picker" name="date_from" class="form-control" placeholder="dd/mm/yyyy" value="<%- params.date_from %>"/> 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+                                        <div class="form-group">
+                                            <label class="form-label">Tag</label>
+                                            <select class="form-control selectpicker" name="category" multiple
+                                                data-live-search="true">
+                                                <% reviewTags.forEach(tag => { %>
+                                                <option value="<%- tag._id %>"
+                                                    <%- params.tag && params.tag.includes(tag._id.toString()) && 'selected' %>>
+                                                    <%- tag.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
                                     </div>
-                                    
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Trạng thái</label>
+                                            <select class="form-control selectpicker" name="status">
+                                                <option value="is_hide" <%- params.status === 'is_hide' && 'selected' %>>Ẩn</option>
+                                                <option value="is_not_hide" <%- params.status === 'is_not_hide' && 'selected' %>>Chưa ẩn</option>
+                                                <option value="is_block" <%- params.status === 'is_not_block' && 'selected' %>>Chặn</option>
+                                                <option value="is_not_block" <%- params.status === 'is_block' && 'selected' %>>Chưa chặn</option>
+                                                <option value="is_confirm" <%- params.status === 'is_note_confirm' && 'selected' %>>Duyệt</option>
+                                                <option value="is_not_confirm" <%- params.status === 'is_confirm' && 'selected' %>>Chưa duyệt</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-md-12 col-lg-6">
                                         <fieldset>
                                             <div class="control-group">
                                                 <label for="input1" class="form-label">Từ ngày</label>
                                                 <div class="controls">
                                                     <div class="input-prepend input-group">
-                                                        <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <input type="text" id="date-picker-2" name="date_to" class="form-control" placeholder="dd/mm/yyyy" value="<%- params.date_to %>"/> 
+                                                        <span class="add-on input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                        <input type="text" id="date-picker" name="date_from"
+                                                            class="form-control" placeholder="dd/mm/yyyy"
+                                                            value="<%- params.date_from %>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <label for="input1" class="form-label">Từ ngày</label>
+                                                <div class="controls">
+                                                    <div class="input-prepend input-group">
+                                                        <span class="add-on input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                        <input type="text" id="date-picker-2" name="date_to"
+                                                            class="form-control" placeholder="dd/mm/yyyy"
+                                                            value="<%- params.date_to %>" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </fieldset>
                                     </div>
                                 </div>
-                            
+
                                 <div class="button-container mt-20">
                                     <a href="/admin/review" class="btn">Hủy</a>
                                     <button type="submit" class="btn btn-default">Tìm kiếm</button>
                                 </div>
                             </form>
-            
+
                         </div>
-                
+
                     </div>
                 </div>
             </div>
@@ -130,13 +173,13 @@
                 <!-- Start Panel -->
                 <div class="col-md-12">
                     <div class="panel panel-default">
-            
+
                         <div class="panel-title">
                             Danh sách <span class="label label-default"><%- totalReview %></span>
                         </div>
-                
+
                         <div class="panel-body">
-                
+
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -152,37 +195,51 @@
                                     </thead>
                                     <tbody>
                                         <% reviewPage.data.forEach(review => { %>
-                                            <tr>
-                                                <td><%- review.title %></td>
-                                                <td><%- review.slug %></td>
-                                                <td><%- review.reviewer.profile.full_name %></td>
-                                                <td style="width: 150px">
-                                                    <span class="label <%- review.category.tag_color %>"><%- review.category.name %></span>
-                                                </td>
-                                                <td>
-                                                    <span class="label <%- review.is_confirm? 'label-success': 'label-warning' %>"><%- review.is_confirm? 'Đã duyệt': 'Chờ duyệt' %></span>
-                                                    <% if (review.is_hide) { %>
-                                                        <span class="label label-danger">Đã ẩn</span>
-                                                    <% } %>
-                                                </td>
-                                                <td class="datetime <%- review._id %>" style="width: 125px;"><%- review.createdAt %></td>
-                                                <td>
-                                                    <a href="/admin/review/create?id=<%- review._id %>" class="view-icon margin-r-5"><i class="fa fa-eye"></i></a>
-                                                    <a onclick="confirmBeforeHide('<%- review._id %>', '<%- review.is_hide %>')" class="hide-icon margin-r-5"><i class="fa fa-ban"></i></a>
-                                                    <a onclick="confirmBeforeDelete('<%- review._id %>')" class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><%- review.title %></td>
+                                            <td><%- review.slug %></td>
+                                            <td><%- review.reviewer.profile.full_name %></td>
+                                            <td style="width: 150px">
+                                                <span
+                                                    class="label <%- review.category.tag_color %>"><%- review.category.name %></span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="label <%- review.is_confirm? 'label-success': 'label-warning' %>"><%- review.is_confirm? 'Đã duyệt': 'Chờ duyệt' %></span>
+                                                <% if (review.is_hide) { %>
+                                                    <span class="label label-danger">Đã ẩn</span>
+                                                <% } %>
+                                                
+                                                <% if (review.is_block) { %>
+                                                    <span class="label label-danger">Đã chặn</span>
+                                                <% } %>
+                                            </td>
+                                            <td class="datetime <%- review._id %>" style="width: 125px;">
+                                                <%- review.createdAt %></td>
+                                            <td>
+                                                <a href="/admin/review/create?id=<%- review._id %>"
+                                                    class="view-icon margin-r-5"><i class="fa fa-eye"></i></a>
+                                                <a onclick="confirmBeforeAction('<%- review._id %>', 'is_hide', 'Ẩn', 'Bạn có muốn ẩn bài review này không?')"
+                                                    class="hide-icon margin-r-5"><i class="fa fa-ban"></i></a>
+                                                <a onclick="confirmBeforeAction('<%- review._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn bài này không?')"
+                                                    class="block-icon margin-r-5"><i class="fa fa-lock"></i></a>
+                                                <a onclick="confirmBeforeAction('<%- review._id %>', 'is_confirm', 'Duyệt', 'Bạn có muốn duyệt bài này không?')"
+                                                    class="confirm-icon margin-r-5"><i class="fa fa-check"></i></a>
+                                                <a onclick="confirmBeforeDelete('<%- review._id %>')"
+                                                    class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
                                         <% }) %>
                                     </tbody>
                                 </table>
-                                
+
                                 <%- include('layouts/pagination', {
                                     data: reviewPage,
                                     pageLink: '/admin/review'+link,
-                                }) %> 
+                                }) %>
                             </div>
                         </div>
-            
+
                     </div>
                 </div>
                 <!-- End Panel -->
@@ -192,112 +249,112 @@
     <!-- End Content -->
 
 
-<%- include('layouts/javascript') %> 
+    <%- include('layouts/javascript') %>
 
-<script>
-    
-    $(document).ready(function() {
-        moment.locale('vi');
-    
-        let reviews = '<%- reviewPage.data.map(item => item._id) %>';
+    <script>
 
-        reviews.split(',').forEach(review => {
-            let time = $('.datetime.'+review).html();
-            $('.datetime.'+review).text(moment(new Date(time)).format('lll'));        
+        $(document).ready(function () {
+            moment.locale('vi');
+
+            let reviews = '<%- reviewPage.data.map(item => item._id) %>';
+
+            reviews.split(',').forEach(review => {
+                let time = $('.datetime.' + review).html();
+                $('.datetime.' + review).text(moment(new Date(time)).format('lll'));
+            })
         })
-    })
-    
-    async function confirmBeforeHide(id, status) {
-        cuteAlert({
-            type: "question",
-            title: status === 'true'?"Bỏ ẩn":"Ẩn",
-            message: status === 'true'?"Bạn có muốn bỏ ẩn bài này?": "Bạn có muốn ẩn bài này không?",
-            confirmText: "Đồng ý",
-            cancelText: "Hủy"
-        }).then(async e => {
-            if(e) {
-                fetch('/user-cms/blog', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // 'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({ id })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(!data.error) {
-                            cuteToast({
-                                type: "success", // or 'info', 'error', 'warning'
-                                message: data.message,
-                                timer: 5000
-                             });
-                             document.location.reload(true);
-                        } else {
+
+        async function confirmBeforeAction(id, type, title, message) {
+            cuteAlert({
+                type: "question",
+                title,
+                message, 
+                confirmText: "Đồng ý",
+                cancelText: "Hủy"
+            }).then(async e => {
+                if (e) {
+                    fetch('/admin/review', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // 'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id, type })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                cuteToast({
+                                    type: "success", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                                document.location.reload(true);
+                            } else {
+                                cuteToast({
+                                    type: "error", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                            }
+                        })
+                        .catch(err => {
                             cuteToast({
                                 type: "error", // or 'info', 'error', 'warning'
                                 message: data.message,
                                 timer: 5000
                             });
-                        }
-                    })
-                    .catch(err => {
-                        cuteToast({
-                            type: "error", // or 'info', 'error', 'warning'
-                            message: data.message,
-                            timer: 5000
                         });
-                    });
-            }
-        })
-    }
+                }
+            })
+        }
 
-    async function confirmBeforeDelete(id) {
-        cuteAlert({
-            type: "question",
-            title: "Xóa",
-            message: "Bạn có muốn bài này không?",
-            confirmText: "Đồng ý",
-            cancelText: "Hủy"
-        }).then(async e => {
-            if(e) {
-                fetch('/user-cms/blog', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // 'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({ id })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(!data.error) {
-                            cuteToast({
-                                type: "success", // or 'info', 'error', 'warning'
-                                message: data.message,
-                                timer: 5000
-                             });
-                             document.location.reload(true);
-                        } else {
+        async function confirmBeforeDelete(id) {
+            cuteAlert({
+                type: "question",
+                title: "Xóa",
+                message: "Bạn có muốn bài này không?",
+                confirmText: "Đồng ý",
+                cancelText: "Hủy"
+            }).then(async e => {
+                if (e) {
+                    fetch('/admin/review', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // 'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                cuteToast({
+                                    type: "success", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                                document.location.reload(true);
+                            } else {
+                                cuteToast({
+                                    type: "error", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                            }
+                        })
+                        .catch(err => {
                             cuteToast({
                                 type: "error", // or 'info', 'error', 'warning'
                                 message: data.message,
                                 timer: 5000
                             });
-                        }
-                    })
-                    .catch(err => {
-                        cuteToast({
-                            type: "error", // or 'info', 'error', 'warning'
-                            message: data.message,
-                            timer: 5000
-                        });   
-                    });
-            }
-        })
-    }
-</script>
+                        });
+                }
+            })
+        }
+    </script>
 
 </body>
-    
+
 </html>

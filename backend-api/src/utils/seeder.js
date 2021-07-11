@@ -80,9 +80,10 @@ async function createReviewDatabaseSeed(times = 5, language) {
             title,
             content: faker.lorem.paragraphs(20),
             reviewer: _id,
-            image: faker.image.image(521, 340),
+            image: faker.image.image(720, 405),
             category: category_id,
             slug: faker.helpers.slugify(title.toLowerCase()),
+            tags: [],
             is_confirm: true,
         });
 
@@ -119,6 +120,34 @@ function createReviewCategory(times = 5, language) {
     }
 
     return { reviewCategories };
+}
+
+/**
+ * @function createReviewTag
+ * @param {number} times 
+ * @param {string} language
+ * @return {Object} bookCategories
+ */
+function createReviewTag(times = 5, language) {
+    if (language) {
+        faker.locale = language;
+    }
+
+    reviewTags = [];
+
+    const color = ['blue', 'green', 'yell', 'orange'];
+
+    for (let i = 0; i < times; i++) {
+        let word = faker.random.word()
+        let tag = new ReviewCategory({
+            name: word,
+            tag_color: faker.helpers.randomize(color),
+        });
+
+        reviewTags = [...reviewTags, tag];
+    }
+
+    return { reviewTags };
 }
 
 /**
@@ -231,6 +260,7 @@ const Seeder = {
     createReviewDatabaseSeed,
     createReviewCategory,
     createComment,
+    createReviewTag,
     createReaction,
     calculateRating,
     getMean,

@@ -4,6 +4,7 @@ const { ReviewController } = require('../../controllers/admin');
 
 /* GET users listing. */
 router.get('/', ReviewController.index);
-// router.post('/login', AuthController.login);
+router.put('/', ReviewController.updateStatusReview);
+router.delete('/', ReviewController.deleteReview);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const { ReviewCategory } = require('./review-category.model');
 const { Review } = require('./review.model');
 const { Role } = require('./role.model');
 const { AccessToken } = require('./access-token.model');
+const { Tag } = require('./tag.model');
 
 module.exports = {
     User,
@@ -17,7 +18,8 @@ module.exports = {
     ReviewCategory,
     Review,
     Role,
-    AccessToken
+    AccessToken,
+    Tag,
 }
 
 
