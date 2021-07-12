@@ -84,7 +84,9 @@
                                                 data-live-search="true">
                                                 <% reviewCategories.forEach(category => { %>
                                                 <option value="<%- category._id %>"
-                                                    <%- params.category && params.category.includes(category._id.toString()) && 'selected' %>>
+                                                    <%- params.category && params.category.includes(category._id.toString()) && 'selected' %>
+                                                    data-content="<span class='label <%- category.tag_color %>'><%- category.name %></span>"
+                                                >
                                                     <%- category.name %></option>
                                                 <% }) %>
                                             </select>
@@ -100,7 +102,9 @@
                                                 data-live-search="true">
                                                 <% reviewTags.forEach(tag => { %>
                                                 <option value="<%- tag._id %>"
-                                                    <%- params.tag && params.tag.includes(tag._id.toString()) && 'selected' %>>
+                                                    <%- params.tag && params.tag.includes(tag._id.toString()) && 'selected' %>
+                                                    data-content="<span class='label <%- tag.tag_color %>'><%- tag.name %></span>"
+                                                >
                                                     <%- tag.name %></option>
                                                 <% }) %>
                                             </select>

@@ -222,8 +222,8 @@ async function getCreate(request, response) {
     try {
         const { id } = request.query;
 
-        reviewCategories = await ReviewCategory.find({ is_block: false }).select(['name']);
-        tags = await Tag.find({ is_block: false }).select(['name']);
+        reviewCategories = await ReviewCategory.find({ is_block: false }).select(['name', 'tag_color']);
+        tags = await Tag.find({ is_block: false }).select(['name', 'tag_color']);
         review = {};
 
         if (id) {
