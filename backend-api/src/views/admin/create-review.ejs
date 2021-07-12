@@ -78,7 +78,10 @@
                                     <label class="form-label">Thể loại</label>
                                     <select class="form-control selectpicker" name="category" data-live-search="true">
                                         <% reviewCategories.forEach(category => { %>
-                                            <option value="<%- category._id %>" <%- review.category === category._id.toString() && 'selected' %> ><%- category.name %></option>
+                                            <option 
+                                                value="<%- category._id %>" <%- review.category === category._id.toString() && 'selected' %>     
+                                                data-content="<span class='label <%- category.tag_color %>'><%- category.name %></span>"
+                                            ><%- category.name %></option>
                                         <% }) %>
                                     </select>
                                 </div>
@@ -86,7 +89,10 @@
                                     <label class="form-label">Tag</label>
                                     <select class="form-control selectpicker" name="tag" multiple data-live-search="true">
                                         <% tags.forEach(tag => { %>
-                                            <option value="<%- tag._id %>" <%- review.tag && review.tag.includes(tag._id.toString()) && 'selected' %> ><%- tag.name %></option>
+                                            <option 
+                                                value="<%- tag._id %>" <%- review.tag && review.tag.includes(tag._id.toString()) && 'selected' %> 
+                                                data-content="<span class='label <%- tag.tag_color %>'><%- tag.name %></span>"
+                                            ><%- tag.name %></option>
                                         <% }) %>
                                     </select>
                                 </div>
@@ -167,14 +173,16 @@
         plugins: [
             'advlist autolink lists link image imagetools charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
+            'insertdatetime media table paste code help wordcount toc'
         ],
         imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
         toolbar: 'undo redo | formatselect | ' +
         'bold italic backcolor | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'alignright alignjustify | toc | bullist numlist outdent indent | ' +
         'removeformat | help',
+        toc_depth: 3,
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        content_css: '/stylesheets/tinymce-style.css',
         images_upload_handler: imageUploadHandler,
     });
     

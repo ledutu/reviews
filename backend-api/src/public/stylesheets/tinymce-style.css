@@ -1,0 +1,21 @@
+.mce-toc {
+    background-color: #f4f4f4;
+    border: 1px solid #009688;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.mce-toc li {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.mce-toc a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333333;
+}
+
+.mce-toc ul {
+    padding-left: 20px;
+}
