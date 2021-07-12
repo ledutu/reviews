@@ -3,9 +3,11 @@ const { Schema } = mongoose;
 const reviewSchema = new Schema({
     title: { type: String, require: true },
     content: { type: String, require: true },
+    summary: { type: String, default: '' },
     reviewer: { type: Schema.Types.ObjectId, ref: 'users' },
     image: { type: String, default: '' },
     category: { type: Schema.Types.ObjectId, ref: 'review_categories' },
+    tag: [{ type: Schema.Types.ObjectId, ref: 'tags' }],
     slug: { type: String, default: '' },
     rate: { type: Number, default: 0 },
     is_confirm: { type: Boolean, default: false },

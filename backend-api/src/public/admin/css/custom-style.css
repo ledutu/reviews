@@ -5,6 +5,8 @@
     --basic-root-color: #009688;
     --basic-root-basic-btn: #E4E4E4;
     --basic-root-warning-btn: #FF6D00;
+    --basic-root-success: #4CAF50;
+    --basic-root-black: #37363E;
 }
 
 .sidebar-custom {
@@ -34,6 +36,16 @@
 .hide-icon {
     font-size: 16px;
     color: var(--basic-root-warning-btn);
+}
+
+.block-icon {
+    font-size: 16px;
+    color: var(--basic-root-black);
+}
+
+.confirm-icon {
+    font-size: 16px;
+    color: var(--basic-root-success);
 }
 
 .delete-icon {
