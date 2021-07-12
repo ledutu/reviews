@@ -21,6 +21,23 @@ function isAdmin(req, res, next) {
     req.app.locals.admin = undefined;
     return res.redirect('/admin/auth/login');
 }
+
+function isAdminApi(req, res, next) {
+    if (req.user) {
+        if (req.user.role === 1) {
+            return next();
+        }
+        
+    }
+    
+    return response.status(500).json({
+        status: 500,
+        error: true,
+        message: 'Bạn không có quyền để xóa bài này.',
+    });
+}
+
 module.exports = {
-    isAdmin
+    isAdmin,
+    isAdminApi,
 }
