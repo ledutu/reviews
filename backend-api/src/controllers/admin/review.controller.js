@@ -139,7 +139,7 @@ async function updateStatusReview(request, response) {
     const { id, type } = request.body;
     try {
         user = request.user;
-        review = await Review.findById(id);
+        review = await Review.findById(id)
 
         if (!review) {
             return response.status(HTTP_STATUS.OK).json({
@@ -272,8 +272,8 @@ async function postCreate(request, response) {
             category,
             slug,
         });
-
-        await review.save();
+        
+        // await review.save();
 
         request.session.message = {
             status: 'success',

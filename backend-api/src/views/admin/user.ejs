@@ -8,7 +8,7 @@
     <meta name="description"
         content="Trang admin quản lý bài tag">
     <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
-    <title>Admin - Quản Lý Tag</title>
+    <title>Admin - Quản Lý User</title>
 
     <!-- ========== Css Files ========== -->
     <%- include('layouts/head') %>
@@ -34,13 +34,13 @@
 
         <!-- Start Page Header -->
         <div class="page-header">
-            <h1 class="title">Danh Sách Tag</h1>
+            <h1 class="title">Danh Sách Người Dùng</h1>
 
             <!-- Start Page Header Right Div -->
             <div class="right">
                 <div class="btn-group" role="group" aria-label="...">
-                    <a href="/admin/tag/create" class="btn btn-light">Tạo tag mới</a>
-                    <a href="/admin/tag" class="btn btn-light"><i class="fa fa-refresh"></i></a>
+                    <a href="/admin/user/create" class="btn btn-light">Tạo người dùng mới</a>
+                    <a href="/admin/user" class="btn btn-light"><i class="fa fa-refresh"></i></a>
                     <a href="#" class="btn btn-light"><i class="fa fa-search"></i></a>
                 </div>
             </div>
@@ -86,8 +86,29 @@
                                     </div>
                                 </div>
                                 
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">Email</label>
+                                            <input type="text" placeholder="Email" name="email" class="form-control"
+                                                id="input1" value="<%- params.email %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Quyền</label>
+                                            <select class="form-control selectpicker" name="role">
+                                                <% roles.forEach(role => { %>
+                                                    <option value="<%- role.role_id %>" <%- params.role === role.role_id && 'selected' %>><%- role.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div class="button-container mt-20">
-                                    <a href="/admin/tag" class="btn">Hủy</a>
+                                    <a href="/admin/user" class="btn">Hủy</a>
                                     <button type="submit" class="btn btn-default">Tìm kiếm</button>
                                 </div>
                             </form>
@@ -103,7 +124,7 @@
                     <div class="panel panel-default">
 
                         <div class="panel-title">
-                            Danh sách <span class="label label-default"><%- totalTag %></span>
+                            Danh sách <span class="label label-default"><%- totalUser %></span>
                         </div>
 
                         <div class="panel-body">
@@ -112,34 +133,34 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <td>ID</td>
                                             <td>Tên</td>
+                                            <td>Email</td>
+                                            <td>Tổng bài review</td>
+                                            <td>Quyền</td>
                                             <td>Trạng thái</td>
                                             <td>Chức năng</td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% tagPage.data.forEach(tag => { %>
+                                        <% userPage.data.forEach(usr => { %>
                                         <tr>
-                                            <td><%- tag._id %></td>
-                                            <td style="width: 150px">
-                                                <span
-                                                    class="label <%- tag.tag_color %>"><%- tag.name %>
-                                                </span>
-                                            </td>
+                                            <td><%- usr.profile.full_name %></td>
+                                            <td><%- usr.email %></td>
+                                            <td><%- usr.total_review %></td>
+                                            <td><%- roles.find(item => item.role_id === usr.role).name %></td>
                                             <td>
-                                                <% if (tag.is_block) { %>
+                                                <% if (usr.is_block) { %>
                                                     <span class="label label-danger">Đã chặn</span>
                                                 <% } else { %> 
                                                     <span class="label label-success">Đang hoạt động</span>
                                                 <%} %> 
                                             </td>
                                             <td>
-                                                <a href="/admin/tag/create?id=<%- tag._id %>"
+                                                <a href="/admin/user/create?id=<%- usr._id %>"
                                                     class="view-icon margin-r-5"><i class="fa fa-eye"></i></a>
-                                                <a onclick="confirmBeforeAction('<%- tag._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn tag này không?')"
+                                                <a onclick="confirmBeforeAction('<%- usr._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn user này không?')"
                                                     class="block-icon margin-r-5"><i class="fa fa-lock"></i></a>
-                                                <a onclick="confirmBeforeDelete('<%- tag._id %>')"
+                                                <a onclick="confirmBeforeDelete('<%- usr._id %>')"
                                                     class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
@@ -148,8 +169,8 @@
                                 </table>
 
                                 <%- include('layouts/pagination', {
-                                    data: tagPage,
-                                    pageLink: '/admin/tag'+link,
+                                    data: userPage,
+                                    pageLink: '/admin/user'+link,
                                 }) %>
                             </div>
                         </div>
@@ -176,7 +197,7 @@
                 cancelText: "Hủy"
             }).then(async e => {
                 if (e) {
-                    fetch('/admin/tag', {
+                    fetch('/admin/user', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -221,7 +242,7 @@
                 cancelText: "Hủy"
             }).then(async e => {
                 if (e) {
-                    fetch('/admin/tag', {
+                    fetch('/admin/user', {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',

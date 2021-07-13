@@ -83,6 +83,18 @@ function calculateVote() {
     fi
 }
 
+function createRole() {
+    echo "Creating role database......"
+    RESPONSE=`wget -qO- ${API_URL}/role`
+    if [ $RESPONSE ]
+    then
+        echo "Create role database successful"
+    else
+        echo "Create role database fail, please check and try again"
+        exit 1
+    fi
+}
+
 function createAll() {
     createUser
     createReviewCategory
@@ -90,6 +102,7 @@ function createAll() {
     createComment
     createReviewVote
     calculateVote
+    createRole
 }
 
 function main() {
@@ -111,6 +124,9 @@ function main() {
         ;;
         "calculate-vote")
             calculateVote
+        ;;
+        "role")
+            createRole
         ;;
         "all")
             createAll

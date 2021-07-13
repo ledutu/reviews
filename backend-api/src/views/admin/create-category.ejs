@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
+<meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+<title>Admin - Thể loại</title>
+
+<!-- ========== Css Files ========== -->
+<%- include('layouts/head') %> 
+
+</head>
+<body>
+    <!-- Start Page Loading -->
+    <%- include('layouts/loading') %> 
+    <!-- End Page Loading -->
+
+    <!-- START TOP -->
+    <%- include('layouts/header') %> 
+    <!-- END TOP -->
+
+    <!-- START SIDEBAR -->
+    <%- include('layouts/sidebar') %> 
+    <!-- END SIDEBAR -->
+    
+    <%- include('layouts/notification') %> 
+
+    <!-- START CONTENT -->
+    <div class="content">
+
+        <!-- Start Page Header -->
+        <div class="page-header">
+            <h1 class="title">Thêm thể loại</h1>
+            <ol class="breadcrumb">
+                <li><a href="/admin/dashboard">Trang chủ</a></li>
+                <li class="active">Thêm thể loại</li>
+            </ol>
+
+            <!-- Start Page Header Right Div -->
+            <div class="right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a href="/admin/category" class="btn">Quay lại</a>
+                </div>
+            </div>
+            <!-- End Page Header Right Div -->
+
+        </div>
+        <!-- End Page Header -->
+
+        <div class="container-flush">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Thông tin thể loại
+                            <ul class="panel-tools">
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                
+                        <div class="panel-body">
+                            <form 
+                                action="<%- id? '/admin/category/update' : '/admin/category/create' %>" 
+                                method="post" 
+                            >
+                                <input type="hidden" name="id" value="<%- id %>">
+                                <div class="form-group">
+                                    <label for="input1" class="form-label">Tên</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Tên" value="<%- category.name %>" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Thể loại cha</label>
+                                    <select class="form-control selectpicker" name="parent" data-live-search="true">
+                                        <option value="root" <%- !category.parent && 'selected' %> >Root</option>
+                                        <% parentCategories.forEach(cate => { %>
+                                        <option value="<%- cate._id %>"
+                                            <%- category.parent && category.parent.includes(cate._id.toString()) && 'selected' %>
+                                            data-content="<span class='label <%- cate.tag_color %>'><%- cate.name %></span>"
+                                        >
+                                            <%- cate.name %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Trạng thái</label>
+                                    <select class="form-control selectpicker" name="status">
+                                        <option data-content="<span class='label label-success'>Hoạt động</span>" value="false" <%- !category.is_block && 'selected' %>>Hoạt động</option>
+                                        <option data-content="<span class='label label-danger'>Chặn</span>" value="true" <%- category.is_block && 'selected' %>>Chặn</option>
+                                    </select>
+                                </div>
+                                <button id="submitButton" type="submit" class="btn btn-default"><%- id? 'Cập nhật': 'Thêm' %></button>
+                            </form>
+            
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Content -->
+
+
+<%- include('layouts/javascript') %> 
+
+</body>
+    
+</html>

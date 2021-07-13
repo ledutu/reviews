@@ -201,13 +201,13 @@ async function createReaction(times = 5, language) {
         _id = faker.helpers.randomize(users)._id;
         review_id = faker.helpers.randomize(reviews)._id;
         rate = faker.helpers.randomize([1, 2, 3, 4, 5]);
-        
+
         vote = await Reaction.findOne({
             user: _id,
             review_id: review_id,
         });
-        
-        if(vote) continue;
+
+        if (vote) continue;
 
         let reaction = new Reaction({
             rate,
@@ -217,7 +217,7 @@ async function createReaction(times = 5, language) {
 
         reactions = [...reactions, reaction];
     }
-    
+
     return { reactions };
 }
 
@@ -255,6 +255,32 @@ async function getMean(id) {
     return mean.toFixed(2);
 }
 
+/**
+ * @function createRole
+ * @return roles,
+ */
+async function createRole() {
+    roles = [];
+    user = new Role({
+        role_id: 0,
+        name: 'user',
+    });
+
+    admin = new Role({
+        role_id: 1,
+        name: 'admin',
+    });
+
+    collaborator = new Role({
+        role_id: 2,
+        name: 'collaborator',
+    });
+
+    roles = [user, admin, collaborator];
+
+    return { roles };
+}
+
 const Seeder = {
     createUserDatabaseSeed,
     createReviewDatabaseSeed,
@@ -264,6 +290,7 @@ const Seeder = {
     createReaction,
     calculateRating,
     getMean,
+    createRole,
 }
 
 module.exports = Seeder
