@@ -4,6 +4,8 @@ var ReviewController = require('./review.controller');
 var UtilController = require('./util.controller');
 var AdminController = require('./admin.controller');
 var TagController = require('./tag.controller');
+var UserController = require('./user.controller');
+var CategoryController = require('./category.controller');
 
 module.exports = {
     AuthController,
@@ -12,4 +14,6 @@ module.exports = {
     UtilController,
     AdminController,
     TagController,
+    CategoryController,
+    UserController,
 }

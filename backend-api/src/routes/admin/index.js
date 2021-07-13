@@ -6,6 +6,8 @@ var util = require('./util.route');
 var dashboard = require('./dashboard.route');
 var admin = require('./admin.route');
 var tag = require('./tag.route');
+var user = require('./user.route');
+var category = require('./category.route');
 
 var { Admin } = require('../../middlewares');
 
@@ -17,5 +19,7 @@ router.use('/review', review);
 router.use('/dashboard', dashboard);
 router.use('/admin', admin);
 router.use('/tag', tag);
+router.use('/user', user);
+router.use('/category', category);
 
 module.exports = router;
