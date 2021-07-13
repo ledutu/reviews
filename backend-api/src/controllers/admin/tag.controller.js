@@ -1,9 +1,4 @@
 const {
-    User,
-    Review,
-    ReviewCategory,
-    Comment,
-    Reaction,
     Tag,
 } = require('../../models');
 var faker = require('faker');
@@ -136,7 +131,7 @@ async function postUpdate(request, response) {
         if (!tag) {
             request.session.message = {
                 status: 'error',
-                content: 'Không tìm thấy bài viết',
+                content: 'Không tìm thấy tag',
             }
 
             return response.redirect('back');
@@ -149,7 +144,7 @@ async function postUpdate(request, response) {
 
         request.session.message = {
             status: 'success',
-            content: 'Thêm tag thành công!',
+            content: 'Cập nhật tag thành công!',
         }
 
         return response.redirect('/admin/tag');

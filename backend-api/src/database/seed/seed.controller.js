@@ -163,6 +163,26 @@ async function calculateVote(request, response) {
     }
 }
 
+async function createRole(request, response) {
+    try {
+        seeders = await Seeder.createRole();
+        console.log("role database: ");
+
+        await Role.insertMany(seeders.roles);
+
+        console.info('Create roles database successful');
+        response.status(200).json({
+            status: 'OK',
+        });;
+    } catch (error) {
+        console.error(error);
+        console.error('Creaate roles database fail, Please try again');
+        response.status(500).json({
+            status: 'FAIL',
+        });;
+    }
+}
+
 module.exports = {
     createUser,
     createReviewCategory,
@@ -170,4 +190,5 @@ module.exports = {
     createComment,
     createReaction,
     calculateVote,
+    createRole,
 }
