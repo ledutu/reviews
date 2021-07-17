@@ -7,6 +7,7 @@ var reaction = require('./reaction.route');
 var review = require('./review.route');
 var user = require('./user.route');
 var config = require('./config.route');
+var category = require('./category.route');
 
 router.use('/auth', auth);
 router.use('/comment', comment);
@@ -15,5 +16,6 @@ router.use('/reaction', reaction);
 router.use('/review', review);
 router.use('/user', user);
 router.use('/config', config)
+router.use('/category', category)
 
 module.exports = router;
