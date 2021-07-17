@@ -47,7 +47,7 @@ export default function Home() {
     // </>
     <>
     <Head>
-      <title>Review du thu</title>
+      <title>Review đủ thứ</title>
       <meta
         name="review đủ thứ"
         content="review đủ thứ"

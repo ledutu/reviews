@@ -1,20 +1,68 @@
 .container{
-    height: 13vh;
+    height: 132px;
+    *:focus{
+        outline: none;
+    };
     .information{
-        height: 62%;
+        height: 81px;
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 14px;
+        font-weight: 500;
         .infoContent{
             width: 70%;
             flex-direction: row;
-            color: black;
+            color: #757575;
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Segoe UI';
+            .search{
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                height: 32px;
+                width: 238px;
+                border: 1px solid #E5E5E5;
+                border-radius: 16px;
+                padding-left: 10px;
+                input{
+                    border: none;
+                    margin: 0px;
+                }
+            }
+            .date{
+               
+            }
+            .news{
+                background-color: white;
+                padding:5px;
+                border: 1px solid #E5E5E5;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                text-align: center;
+                .text{
+                   padding-left: 5px;
+                }
+            }
+            .login{
+                width: 100px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                a:hover{
+                    text-decoration: underline;
+                }
+              
+            }
         }
     }
     .nav{
-        height: 38%;
+        height: 51px;
         background-color: #0581C9;
         display: flex;
         justify-content: center;
@@ -22,9 +70,17 @@
         .navContent{
             width: 70%;
             color: white;
+            font-family: sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Segoe UI';
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            align-items: center;
+            a:hover{
+                text-decoration: underline;
+            }
         }
     }
 }
