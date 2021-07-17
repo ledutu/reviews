@@ -9,7 +9,7 @@
   .listOfContent {
     display: block;
     width: 725px;
-    div:first-child {
+    .itemContent:first-child {
       border-top: 1px solid #dddddd;
     }
     .itemContent {
