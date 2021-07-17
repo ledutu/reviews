@@ -1,0 +1,30 @@
+.container{
+    height: 13vh;
+    .information{
+        height: 62%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .infoContent{
+            width: 70%;
+            flex-direction: row;
+            color: black;
+            display: flex;
+            flex-direction: row;
+        }
+    }
+    .nav{
+        height: 38%;
+        background-color: #0581C9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .navContent{
+            width: 70%;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}
