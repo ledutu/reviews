@@ -6,10 +6,17 @@ var logger = require('morgan');
 const session = require('express-session');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var cors = require('cors')
 require('dotenv').config()
 
 var apiRouter = require('./src/routes');
+var adminRouter = require('./src/routes/admin');
 var databaseRouter = require('./src/database/seed/seed.route');
+
+//middleware
+var { Admin } = require('./src/middlewares');
+const corsOpts = require('./src/cors');
 
 var app = express();
 
@@ -38,11 +45,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/src/public')));
 app.use('/axios', express.static(path.join(__dirname, 'node_modules', 'axios')));
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-const { DB_HOST, DB_PORT, DB_NAME, ACCESS_TIMEOUT, MONGODB_URL } = process.env;
+app.use(passport.initialize());
+app.use(passport.session());
 
-const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-// const mongoUrl = MONGODB_URL;
+app.use(cors(corsOpts))
+
+const {
+  DB_HOST,
+  DB_PORT,
+  DB_NAME,
+  ACCESS_TIMEOUT,
+  MONGODB_URL,
+  DB_USERNAME,
+  DB_PASSWORD
+} = process.env;
+
+// const mongoUrl = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=${DB_NAME}`;
+const mongoUrl = MONGODB_URL;
 
 const db = mongoose.connection;
 
@@ -68,6 +89,9 @@ db.on('connected', () => {
 app.use('/database/create-database', databaseRouter);
 app.use('/api', apiRouter);
 
+app.use(Admin.Message.isMessage);
+app.use('/admin', adminRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -81,7 +105,14 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+
+  console.log(err);
+
+  if (err.status === 404) {
+    return res.render('404');
+  } else {
+    return res.render('500');
+  }
 });
 
 module.exports = app;

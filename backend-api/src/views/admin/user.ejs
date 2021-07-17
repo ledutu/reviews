@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Trang admin quản lý bài tag">
+    <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+    <title>Admin - Quản Lý User</title>
+
+    <!-- ========== Css Files ========== -->
+    <%- include('layouts/head') %>
+</head>
+
+<body>
+    <!-- Start Page Loading -->
+    <%- include('layouts/loading') %>
+    <!-- End Page Loading -->
+
+    <!-- START TOP -->
+    <%- include('layouts/header') %>
+    <!-- END TOP -->
+
+    <!-- START SIDEBAR -->
+    <%- include('layouts/sidebar') %>
+    <!-- END SIDEBAR -->
+
+    <%- include('layouts/notification') %>
+
+    <!-- START CONTENT -->
+    <div class="content">
+
+        <!-- Start Page Header -->
+        <div class="page-header">
+            <h1 class="title">Danh Sách Người Dùng</h1>
+
+            <!-- Start Page Header Right Div -->
+            <div class="right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a href="/admin/user/create" class="btn btn-light">Tạo người dùng mới</a>
+                    <a href="/admin/user" class="btn btn-light"><i class="fa fa-refresh"></i></a>
+                    <a href="#" class="btn btn-light"><i class="fa fa-search"></i></a>
+                </div>
+            </div>
+            <!-- End Page Header Right Div -->
+
+        </div>
+        <!-- End Page Header -->
+
+        <div class="container-flush">
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Tìm kiếm
+                            <ul class="panel-tools">
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <!-- <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li> -->
+                            </ul>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="#" method="GET">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">Tên</label>
+                                            <input type="text" placeholder="Tên" name="name" class="form-control"
+                                                id="input1" value="<%- params.name %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Trạng thái</label>
+                                            <select class="form-control selectpicker" name="status">
+                                                <option value="false" <%- params.status === 'false' && 'selected' %>>Đang hoạt động</option>
+                                                <option value="true" <%- params.status === 'true' && 'selected' %>>Đã chặn</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">Email</label>
+                                            <input type="text" placeholder="Email" name="email" class="form-control"
+                                                id="input1" value="<%- params.email %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Quyền</label>
+                                            <select class="form-control selectpicker" name="role">
+                                                <% roles.forEach(role => { %>
+                                                    <option value="<%- role.role_id %>" <%- params.role === role.role_id && 'selected' %>><%- role.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="button-container mt-20">
+                                    <a href="/admin/user" class="btn">Hủy</a>
+                                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Start Panel -->
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Danh sách <span class="label label-default"><%- totalUser %></span>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td>Tên</td>
+                                            <td>Email</td>
+                                            <td>Tổng bài review</td>
+                                            <td>Quyền</td>
+                                            <td>Trạng thái</td>
+                                            <td>Chức năng</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% userPage.data.forEach(usr => { %>
+                                        <tr>
+                                            <td><%- usr.profile.full_name %></td>
+                                            <td><%- usr.email %></td>
+                                            <td><%- usr.total_review %></td>
+                                            <td><%- roles.find(item => item.role_id === usr.role).name %></td>
+                                            <td>
+                                                <% if (usr.is_block) { %>
+                                                    <span class="label label-danger">Đã chặn</span>
+                                                <% } else { %> 
+                                                    <span class="label label-success">Đang hoạt động</span>
+                                                <%} %> 
+                                            </td>
+                                            <td>
+                                                <a href="/admin/user/create?id=<%- usr._id %>"
+                                                    class="view-icon margin-r-5"><i class="fa fa-eye"></i></a>
+                                                <a onclick="confirmBeforeAction('<%- usr._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn user này không?')"
+                                                    class="block-icon margin-r-5"><i class="fa fa-lock"></i></a>
+                                                <a onclick="confirmBeforeDelete('<%- usr._id %>')"
+                                                    class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+
+                                <%- include('layouts/pagination', {
+                                    data: userPage,
+                                    pageLink: '/admin/user'+link,
+                                }) %>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+        </div>
+    </div>
+    <!-- End Content -->
+
+
+    <%- include('layouts/javascript') %>
+
+    <script>
+
+        async function confirmBeforeAction(id, type, title, message) {
+            cuteAlert({
+                type: "question",
+                title,
+                message, 
+                confirmText: "Đồng ý",
+                cancelText: "Hủy"
+            }).then(async e => {
+                if (e) {
+                    fetch('/admin/user', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // 'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id, type })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                cuteToast({
+                                    type: "success", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                                document.location.reload(true);
+                            } else {
+                                cuteToast({
+                                    type: "error", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            cuteToast({
+                                type: "error", // or 'info', 'error', 'warning'
+                                message: data.message,
+                                timer: 5000
+                            });
+                        });
+                }
+            })
+        }
+
+        async function confirmBeforeDelete(id) {
+            cuteAlert({
+                type: "question",
+                title: "Xóa",
+                message: "Bạn có muốn bài này không?",
+                confirmText: "Đồng ý",
+                cancelText: "Hủy"
+            }).then(async e => {
+                if (e) {
+                    fetch('/admin/user', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // 'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                cuteToast({
+                                    type: "success", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                                document.location.reload(true);
+                            } else {
+                                cuteToast({
+                                    type: "error", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            cuteToast({
+                                type: "error", // or 'info', 'error', 'warning'
+                                message: data.message,
+                                timer: 5000
+                            });
+                        });
+                }
+            })
+        }
+    </script>
+
+</body>
+
+</html>

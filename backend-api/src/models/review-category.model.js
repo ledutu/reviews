@@ -6,10 +6,11 @@ const color = ['blue', 'green', 'yell', 'orange'];
 const reviewCategorySchema = new Schema({
     name: { type: String, default: '' },
     short_name: { type: String, default: '' },
-    children: [this],
+    parent: this,
+    path: { type: String, default: '/' },
     visited: { type: Number, default: 0 },
     tag_color: { type: String, enum: color, default: 'orange' },
-    hide: { type: Boolean, default: false },
+    is_block: { type: Boolean, default: false },
 }, { timestamps: { currentTime: () => Date.now() } });
 
 const ReviewCategory = mongoose.model('review_categories', reviewCategorySchema);

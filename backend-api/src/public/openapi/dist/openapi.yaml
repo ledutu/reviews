@@ -3,7 +3,7 @@ info:
   title: openapi
   version: '1.0'
 servers:
-  - url: 'http://localhost:4000/api'
+  - url: 'http://api.reviewduthu.vn/api'
 paths:
   /auth/login:
     parameters: []
@@ -349,6 +349,22 @@ paths:
         - Authorization: []
       tags:
         - Reaction
+  /category:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Category
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '500':
+          $ref: '#/components/responses/500'
+      operationId: get-category
+      description: Get all category
 components:
   schemas:
     Error:
@@ -474,6 +490,10 @@ components:
         short_name:
           type: string
         tag_color:
+          type: string
+        parent:
+          type: string
+        path:
           type: string
     CommentPaginate:
       title: CommentPaginate

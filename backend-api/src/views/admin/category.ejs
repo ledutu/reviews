@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Trang admin quản lý bài tag">
+    <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+    <title>Admin - Quản Lý Thể Loại</title>
+
+    <!-- ========== Css Files ========== -->
+    <%- include('layouts/head') %>
+</head>
+
+<body>
+    <!-- Start Page Loading -->
+    <%- include('layouts/loading') %>
+    <!-- End Page Loading -->
+
+    <!-- START TOP -->
+    <%- include('layouts/header') %>
+    <!-- END TOP -->
+
+    <!-- START SIDEBAR -->
+    <%- include('layouts/sidebar') %>
+    <!-- END SIDEBAR -->
+
+    <%- include('layouts/notification') %>
+
+    <!-- START CONTENT -->
+    <div class="content">
+
+        <!-- Start Page Header -->
+        <div class="page-header">
+            <h1 class="title">Danh Sách Thể Loại</h1>
+
+            <!-- Start Page Header Right Div -->
+            <div class="right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a href="/admin/category/create" class="btn btn-light">Tạo thể loại mới</a>
+                    <a href="/admin/category" class="btn btn-light"><i class="fa fa-refresh"></i></a>
+                    <a href="#" class="btn btn-light"><i class="fa fa-search"></i></a>
+                </div>
+            </div>
+            <!-- End Page Header Right Div -->
+
+        </div>
+        <!-- End Page Header -->
+
+        <div class="container-flush">
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Tìm kiếm
+                            <ul class="panel-tools">
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <!-- <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li> -->
+                            </ul>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="#" method="GET">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">Tên</label>
+                                            <input type="text" placeholder="Tên" name="name" class="form-control"
+                                                id="input1" value="<%- params.name %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Trạng thái</label>
+                                            <select class="form-control selectpicker" name="status">
+                                                <option value="false" <%- params.status === 'false' && 'selected' %>>Đang hoạt động</option>
+                                                <option value="true" <%- params.status === 'true' && 'selected' %>>Đã chặn</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">Đường dẫn</label>
+                                            <input type="text" placeholder="Đường dẫn" name="path" class="form-control"
+                                                id="input1" value="<%- params.path %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Thể loại cha</label>
+                                            <select class="form-control selectpicker" name="parent" multiple
+                                                data-live-search="true">
+                                                <% parentCategories.forEach(category => { %>
+                                                <option value="<%- category._id %>"
+                                                    <%- params.parent && params.parent.includes(category._id.toString()) && 'selected' %>
+                                                    data-content="<span class='label <%- category.tag_color %>'><%- category.name %></span>"
+                                                >
+                                                    <%- category.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="button-container mt-20">
+                                    <a href="/admin/category" class="btn">Hủy</a>
+                                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Start Panel -->
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Danh sách <span class="label label-default"><%- totalCategory %></span>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>Tên</td>
+                                            <td>Thể loại cha</td>
+                                            <td>Đường dẫn</td>
+                                            <td>Trạng thái</td>
+                                            <td>Chức năng</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% categoryPage.data.forEach(category => { %>
+                                        <tr>
+                                            <td><%- category._id %></td>
+                                            <td style="width: 150px">
+                                                <span
+                                                    class="label <%- category.tag_color %>"><%- category.name %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <% if (category.parent) { %>
+                                                    <span
+                                                        class="label <%- category.parent.tag_color %>"><%- category.parent.name %>
+                                                    </span>
+                                                <% } else { %>
+                                                    Thể loại gốc
+                                                <% } %>
+                                            </td>
+                                            <td><%- category.path || '/' %></td>
+                                            <td>
+                                                <% if (category.is_block) { %>
+                                                    <span class="label label-danger">Đã chặn</span>
+                                                <% } else { %> 
+                                                    <span class="label label-success">Đang hoạt động</span>
+                                                <%} %> 
+                                            </td>
+                                            <td>
+                                                <a href="/admin/category/create?id=<%- category._id %>"
+                                                    class="view-icon margin-r-5"><i class="fa fa-eye"></i></a>
+                                                <a onclick="confirmBeforeAction('<%- category._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn thể loại này không?')"
+                                                    class="block-icon margin-r-5"><i class="fa fa-lock"></i></a>
+                                                <a onclick="confirmBeforeDelete('<%- category._id %>')"
+                                                    class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+
+                                <%- include('layouts/pagination', {
+                                    data: categoryPage,
+                                    pageLink: '/admin/category'+link,
+                                }) %>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+        </div>
+    </div>
+    <!-- End Content -->
+
+
+    <%- include('layouts/javascript') %>
+
+    <script>
+
+        async function confirmBeforeAction(id, type, title, message) {
+            cuteAlert({
+                type: "question",
+                title,
+                message, 
+                confirmText: "Đồng ý",
+                cancelText: "Hủy"
+            }).then(async e => {
+                if (e) {
+                    fetch('/admin/category', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // 'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id, type })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                cuteToast({
+                                    type: "success", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                                document.location.reload(true);
+                            } else {
+                                cuteToast({
+                                    type: "error", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            cuteToast({
+                                type: "error", // or 'info', 'error', 'warning'
+                                message: data.message,
+                                timer: 5000
+                            });
+                        });
+                }
+            })
+        }
+
+        async function confirmBeforeDelete(id) {
+            cuteAlert({
+                type: "question",
+                title: "Xóa",
+                message: "Bạn có muốn bài này không?",
+                confirmText: "Đồng ý",
+                cancelText: "Hủy"
+            }).then(async e => {
+                if (e) {
+                    fetch('/admin/category', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // 'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                cuteToast({
+                                    type: "success", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                                document.location.reload(true);
+                            } else {
+                                cuteToast({
+                                    type: "error", // or 'info', 'error', 'warning'
+                                    message: data.message,
+                                    timer: 5000
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            cuteToast({
+                                type: "error", // or 'info', 'error', 'warning'
+                                message: data.message,
+                                timer: 5000
+                            });
+                        });
+                }
+            })
+        }
+    </script>
+
+</body>
+
+</html>

@@ -11,6 +11,7 @@
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
     "ejs": "~2.6.1",
@@ -30,6 +31,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "sweetalert": "^2.1.2",
+    "tinymce": "^5.8.2",
     "validator": "^13.6.0"
   },
   "devDependencies": {
