@@ -6,6 +6,7 @@ var AdminController = require('./admin.controller');
 var TagController = require('./tag.controller');
 var UserController = require('./user.controller');
 var CategoryController = require('./category.controller');
+var HistoryController = require('./history.controller');
 
 module.exports = {
     AuthController,
@@ -16,4 +17,5 @@ module.exports = {
     TagController,
     CategoryController,
     UserController,
+    HistoryController,
 }
