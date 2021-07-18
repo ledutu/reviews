@@ -94,7 +94,7 @@ async function index(request, response) {
         }
 
         if (date_to) {
-            link += 'date_from=' + date_to + '&';
+            link += 'date_to=' + date_to + '&';
             date_to = date_to.split('/');
             date_to = new Date(date_to[2] + '-' + date_to[1] + '-' + date_to[0]);
             reviews = reviews.where('createdAt').equals({ $lte: date_to });
