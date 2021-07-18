@@ -1,12 +1,26 @@
 import * as types from "../../types";
 import axios from "axios";
-// export const pushPostsToStore = () => async (dispatch) => {
-//   //const res = await axios.get("http://api.reviewduthu.vn/api/review/category");
-//   dispatch({
-//     type: types.GET_POSTS,
-//     payload: data,
-//   });
-// };
+export const fetchPostByID = (id) => async (dispatch) => {
+  const res = await axios.get(`http://api.reviewduthu.vn/api/review/${id}`);
+  dispatch({
+    type: types.GET_POST_BY_ID,
+    payload: res.data,
+  });
+};
+
+export const pushPostsToStore = (data) => async (dispatch) => {
+  dispatch({
+    type: types.GET_POSTS,
+    payload: data,
+  });
+};
+
+export const pushPostToStore = (data) => async (dispatch) => {
+  dispatch({
+    type: types.PUSH_POST_TO_STORE,
+    payload: data,
+  });
+};
 
 const responseData = {
   data: [
@@ -226,6 +240,18 @@ const responseData = {
   page: 1,
   limit: 10,
 };
+
+// export const fetchPostByID = async (id) => {
+//   try {
+//     const response = await axios.get(
+//       `http://api.reviewduthu.vn/api/review/${id}`
+//     );
+
+//     return response.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const fetchPosts = async () => {
   try {

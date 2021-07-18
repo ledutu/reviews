@@ -16,13 +16,15 @@ function TopContent(props) {
     return arr.map((item) => {
       return (
         <div key={item._id}>
-          <Image
-            className={styles.imageCover}
-            src={item.image}
-            width="300"
-            height="160"
-            alt="newestContent"
-          />
+          <div className={styles.wrapperImage}>
+            <Image
+              className={styles.imageCover}
+              src={item.image}
+              width="300"
+              height="160"
+              alt="newestContent"
+            />
+          </div>
           <h3 className={styles.title}>{item.title}</h3>
         </div>
       );
