@@ -8,6 +8,7 @@ var admin = require('./admin.route');
 var tag = require('./tag.route');
 var user = require('./user.route');
 var category = require('./category.route');
+var history = require('./history.route');
 
 var { Admin } = require('../../middlewares');
 
@@ -21,5 +22,6 @@ router.use('/admin', admin);
 router.use('/tag', tag);
 router.use('/user', user);
 router.use('/category', category);
+router.use('/history', history);
 
 module.exports = router;

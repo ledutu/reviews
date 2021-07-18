@@ -115,6 +115,7 @@
                                         <div class="form-group">
                                             <label class="form-label">Trạng thái</label>
                                             <select class="form-control selectpicker" name="status">
+                                                <option value="">Chưa chọn</option>
                                                 <option value="is_hide" <%- params.status === 'is_hide' && 'selected' %>>Ẩn</option>
                                                 <option value="is_not_hide" <%- params.status === 'is_not_hide' && 'selected' %>>Chưa ẩn</option>
                                                 <option value="is_block" <%- params.status === 'is_not_block' && 'selected' %>>Chặn</option>
@@ -147,7 +148,7 @@
                                     <div class="col-md-12 col-lg-6">
                                         <fieldset>
                                             <div class="control-group">
-                                                <label for="input1" class="form-label">Từ ngày</label>
+                                                <label for="input1" class="form-label">Đến ngày</label>
                                                 <div class="controls">
                                                     <div class="input-prepend input-group">
                                                         <span class="add-on input-group-addon"><i
@@ -203,7 +204,7 @@
                                         <tr>
                                             <td><%- review.title %></td>
                                             <td><%- review.slug %></td>
-                                            <td><%- review.reviewer.profile.full_name %></td>
+                                            <td><%- review.reviewer && review.reviewer.profile.full_name %></td>
                                             <td style="width: 150px">
                                                 <span
                                                     class="label <%- review.category.tag_color %>"><%- review.category.name %></span>
