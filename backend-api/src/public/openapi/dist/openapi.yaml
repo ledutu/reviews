@@ -4,6 +4,7 @@ info:
   version: '1.0'
 servers:
   - url: 'http://api.reviewduthu.vn/api'
+  - url: 'http://localhost:4000/api'
 paths:
   /auth/login:
     parameters: []
