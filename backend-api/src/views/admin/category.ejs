@@ -142,6 +142,7 @@
                                             <td>Tên</td>
                                             <td>Thể loại cha</td>
                                             <td>Đường dẫn</td>
+                                            <td>Lượt ghé thăm</td>
                                             <td>Trạng thái</td>
                                             <td>Chức năng</td>
                                         </tr>
@@ -165,6 +166,7 @@
                                                 <% } %>
                                             </td>
                                             <td><%- category.path || '/' %></td>
+                                            <td><%- category.visited || 0 %></td>
                                             <td>
                                                 <% if (category.is_block) { %>
                                                     <span class="label label-danger">Đã chặn</span>

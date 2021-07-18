@@ -1,8 +1,8 @@
 const {
-    User, Role,
+    User, Role, History,
 } = require('../../models');
 var faker = require('faker');
-const { HTTP_STATUS } = require('../../constant');
+const { HTTP_STATUS, ACTION } = require('../../constant');
 const bcrypt = require('bcrypt');
 
 async function index(request, response) {
@@ -95,6 +95,12 @@ async function updateStatusUser(request, response) {
 
         await user.save();
 
+        History.saveHistory(
+            request.user,
+            ACTION.BLOCK_USER,
+            (!user.is_block ? 'Mở chặn' : 'Chặn') + ' người dùng ' + user._id + ' thành công'
+        );
+
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
             error: false,
@@ -125,6 +131,8 @@ async function deleteUser(request, response) {
         }
 
         await user.delete();
+
+        History.saveHistory(request.user, ACTION.DELETE_USER, 'Xóa người dùng "' + user.email + '" thành công');
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
@@ -201,6 +209,8 @@ async function postCreate(request, response) {
         });
 
         await newUser.save();
+        
+        History.saveHistory(user, ACTION.CREATE_USER, 'Tạo người dùng ' + newUser.email + ' thành công');
 
         request.session.message = {
             status: 'success',
@@ -226,26 +236,26 @@ async function postUpdate(request, response) {
         let { full_name, username, password, password_confirm, gender, status, role, id } = request.body;
 
         user = request.user;
-        
-        existUser = await User.findById(id);
-        if(!existUser) throw new Error('User không tồn tại');
 
-        if(existUser.profile.username !== username) {
+        existUser = await User.findById(id);
+        if (!existUser) throw new Error('User không tồn tại');
+
+        if (existUser.profile.username !== username) {
             usernameChecking = await User.findOne({ 'profile.username': username }).select('_id');
-            if (usernameChecking) throw new Error('Username đã tồn tại');    
+            if (usernameChecking) throw new Error('Username đã tồn tại');
         }
 
         if (user.role !== 1) throw new Error('Tài khoản không phải admin');
 
         if (password !== password_confirm) throw new Error('Mật khẩu không trùng nhau');
 
-        
-        if(password && password_confirm) {
+
+        if (password && password_confirm) {
             let hashPassword = bcrypt.hashSync(password, 12);
             existUser.password = hashPassword;
             existUser.password_not_hash = password;
         }
-        
+
         existUser.profile.username = username;
         existUser.profile.full_name = full_name;
         existUser.profile.gender = gender;
