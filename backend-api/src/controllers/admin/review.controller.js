@@ -273,7 +273,10 @@ async function postCreate(request, response) {
             slug,
         });
         
-        // await review.save();
+        await review.save();
+        
+        user.total_review += 1;
+        await user.save();
 
         request.session.message = {
             status: 'success',

@@ -14,7 +14,7 @@ const userSchema = new Schema({
         username: { type: String, default: '' },
         full_name: { type: String, default: '' },
         address: { type: String, default: '' },
-        image: { type: String, default: '/user/images/no-image.jpg' },
+        image: { type: String, default: '/images/no-image.jpg' },
         gender: { type: String, enum: ['men', 'women', 'third'], default: 'men' },
         birthday: { type: Date, default: Date.now() },
     },
@@ -31,7 +31,7 @@ const userSchema = new Schema({
 
 //Create new function
 userSchema.statics.authenticate = async function (email, password, isAdmin, callbackResult, callbackErr) {
-    User.findOne({ email }).select([
+    User.findOne({ $or: [{ email }, { 'profile.username': email }] }).select([
         'google_id', 'facebook_id', 'tokens'
     ]).exec(async function (err, user) {
         if (err) {
@@ -67,8 +67,8 @@ userSchema.statics.authenticate = async function (email, password, isAdmin, call
         userPassword = await User.findById(user._id).select(['password']);
         bcrypt.compare(password, userPassword.password, async function (err, result) {
             if (result) {
-                if(isAdmin) return callbackResult(user);
-                
+                if (isAdmin) return callbackResult(user);
+
                 let token = jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
                     expiresIn: '30d'
                 });
