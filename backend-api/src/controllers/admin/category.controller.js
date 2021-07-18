@@ -1,8 +1,8 @@
 const {
-    ReviewCategory,
+    ReviewCategory, History,
 } = require('../../models');
 var faker = require('faker');
-const { HTTP_STATUS } = require('../../constant');
+const { HTTP_STATUS, ACTION } = require('../../constant');
 const { StringHelper } = require('../../utils');
 
 async function index(request, response) {
@@ -99,6 +99,12 @@ async function updateStatusCategory(request, response) {
 
         await category.save();
 
+        History.saveHistory(
+            user,
+            ACTION.BLOCK_CATEGORY,
+            (!category.is_block ? 'Mở chặn' : 'Chặn') + ' thể loại ' + category._id + ' thành công'
+        );
+
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
             error: false,
@@ -129,6 +135,8 @@ async function deleteCategory(request, response) {
         }
 
         await category.delete();
+
+        History.saveHistory(user, ACTION.DELETE_CATEGORY, 'Xóa thể loại "' + category.name + '" thành công');
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
@@ -193,6 +201,8 @@ async function postCreate(request, response) {
         });
 
         await category.save();
+        
+        History.saveHistory(user, ACTION.CREATE_CATEGORY, 'Tạo thể loại "' + category._id + '" thành công');
 
         request.session.message = {
             status: 'success',
@@ -229,8 +239,8 @@ async function postUpdate(request, response) {
         }
 
         parentCategory = await ReviewCategory.findOne({ parent: id });
-        
-        if(parentCategory) {
+
+        if (parentCategory) {
             request.session.message = {
                 status: 'error',
                 content: 'Menu này đang có menu con.',
@@ -238,7 +248,7 @@ async function postUpdate(request, response) {
 
             return response.redirect('back');
         }
-        
+
         if (parent !== 'root') {
             parentCategory = await ReviewCategory.findById(parent);
             category.path = (parentCategory.path || '') + faker.helpers.slugify(StringHelper.removeVietnameseTones(parentCategory.name.toLowerCase()));
@@ -252,6 +262,8 @@ async function postUpdate(request, response) {
         category.is_block = status;
 
         await category.save();
+        
+        History.saveHistory(user, ACTION.CREATE_CATEGORY, 'Cập nhật thể loại "' + category._id + '" thành công');
 
         request.session.message = {
             status: 'success',
