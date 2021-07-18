@@ -11,7 +11,7 @@
         font-size: 14px;
         font-weight: 500;
         .infoContent{
-            width: 70%;
+            width: 80%;
             flex-direction: row;
             color: #757575;
             display: flex;
@@ -31,7 +31,14 @@
                 input{
                     border: none;
                     margin: 0px;
+                    font-family: 'Segoe UI';
+                    font-weight: 500;
                 }
+                ::placeholder {
+                    font-family: 'Segoe UI';
+                    font-size: 14px;
+                   
+                  }
             }
             .date{
                
@@ -68,7 +75,7 @@
         justify-content: center;
         align-items: center;
         .navContent{
-            width: 70%;
+            width: 80%;
             color: white;
             font-family: sans-serif;
             font-size: 16px;
@@ -80,6 +87,13 @@
             align-items: center;
             a:hover{
                 text-decoration: underline;
+            }
+            .listAll{
+                width: 90px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                
             }
         }
     }

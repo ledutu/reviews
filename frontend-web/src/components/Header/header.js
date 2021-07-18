@@ -7,7 +7,7 @@ import home from '../../assets/home/home.svg'
 import clock from '../../assets/home/clock.svg'
 import search from '../../assets/home/search.svg'
 import login from '../../assets/home/login.svg'
-import listAll from '../../assets/home/listAll.svg'
+import iconlistall from '../../assets/home/iconlistall.png'
 var today = new Date(); // Sun Dec 22 2019 13:18:01 GMT+0530 (India Standard Time)
 var date =  today.getDate()+ '-' + (today.getMonth() + 1) + '-'+ today.getFullYear() ;
 export default function Header(){
@@ -72,13 +72,18 @@ export default function Header(){
                    <Link href="/"><a>Đồ ăn</a></Link>
                    <Link href="/"><a>Đồ gia dụng</a></Link>
                    <Link href="/"><a>Nhà hàng</a></Link>
-                   <Link href="/"><a>Tất cả</a></Link>
-                   <Link href="/"> 
-                        <Image 
-                            src={listAll}
-                            alt="login"  
-                            quality={100}
-                        /></Link>
+                   <div className={styles.listAll}>
+                        <Link href="/"><a>Tất cả</a></Link>
+                        <Link href="/"> 
+                                <Image 
+                                    src={iconlistall}
+                                    alt="login"  
+                                    width={35}
+                                    height={26.6}
+                                    quality={100}
+                                />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

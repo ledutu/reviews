@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 import styles from './Footer.module.scss'
-import iconfacebook from '../../assets/home/iconfacebook.svg'
-import icontwitter from '../../assets/home/icontwitter.svg'
-import iconinstagram from '../../assets/home/iconinstagram.svg'
-import iconyoutube from '../../assets/home/iconyoutube.svg'
+import iconfacebook from '../../assets/home/iconfacebook.png'
+import icontwitter from '../../assets/home/icontwitter.png'
+import iconinstagram from '../../assets/home/iconinstagram.png'
+import iconyoutube from '../../assets/home/iconyoutube.png'
 import Image from 'next/image'
 export default function Footer() {
     return (
@@ -54,10 +54,10 @@ export default function Footer() {
                     <h3>Liên lạc</h3>
                     <ul>
                         <li>
-                            <Link href="/">567 Los Angeles - US</Link>
+                            <Link href="/">567 Nguyễn Thị Minh Khai</Link>
                         </li>
                         <li>
-                            <Link href="/">+61 23 8093 3400</Link>
+                            <Link href="/">+84123456789</Link>
                         </li>
                         <li>
                             <Link href="/">info@gmail.com</Link>
@@ -76,26 +76,36 @@ export default function Footer() {
 
                     </ul>
                     <h3>Theo dõi chúng tôi</h3>
-                    <Image
-                        src={iconfacebook}
-                        alt="facebook"
-                        quality={100}
-                    />
-                    <Image
-                        src={icontwitter}
-                        alt="twitter"
-                        quality={100}
-                    />
-                    <Image
-                        src={iconinstagram}
-                        alt="instagram"
-                        quality={100}
-                    />
-                    <Image
-                        src={iconyoutube}
-                        alt="youtube"
-                        quality={100}
-                    />
+                    <div className={styles.socialContacts}>
+                        <Image
+                            src={iconfacebook}
+                            alt="facebook"
+                            width={40}
+                            height={40}
+                            quality={100}
+                        />
+                        <Image
+                            src={icontwitter}
+                            alt="twitter"
+                            width={40}
+                            height={40}
+                            quality={100}
+                        />
+                        <Image
+                            src={iconinstagram}
+                            alt="instagram"
+                            width={40}
+                            height={40}
+                            quality={100}
+                        />
+                        <Image
+                            src={iconyoutube}
+                            alt="youtube"
+                            width={40}
+                            height={40}
+                            quality={100}
+                        />
+                    </div>
                 </div>
             </div>
         </div >
