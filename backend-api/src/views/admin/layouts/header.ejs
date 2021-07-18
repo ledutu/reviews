@@ -2,7 +2,7 @@
 
     <!-- Start App Logo -->
     <div class="applogo">
-      <a href="index.html" class="logo">Review</a>
+      <a href="/admin/dashboard" class="logo">Review</a>
     </div>
     <!-- End App Logo -->
 
@@ -31,13 +31,14 @@
       <a href="#" data-toggle="dropdown" class="dropdown-toggle hdbutton">Tạo mới <span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list">
           <li><a href="/admin/review/create"><i class="fa falist fa-paper-plane-o"></i>Review</a></li>
-          <li><a href="/admin/category/create"><i class="fa falist fa-font"></i>Thể loại</a></li>
-          <li><a href="/admin/tag/create"><i class="fa falist fa-font"></i>Tag</a></li>
+          <li><a href="/admin/category/create"><i class="fa falist fa-th"></i>Thể loại</a></li>
+          <li><a href="/admin/tag/create"><i class="fa falist fa-tags"></i>Tag</a></li>
+          <li><a href="/admin/user/create"><i class="fa falist fa-user"></i>Người dùng</a></li>
         </ul>
     </li>
 
     <li class="dropdown link">
-      <a data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="<%- admin.profile.image || '/admin/img/profileimg.png'%>" alt="img"><b><%- admin.profile.full_name || admin.email %> </b></a>
+      <a href="/admin/user/create?id=<%- admin._id %>" class="dropdown-toggle profilebox"><img src="<%- admin.profile.image || '/admin/img/profileimg.png'%>" alt="img"><b><%- admin.profile.full_name || admin.email %> </b></a>
     </li>
 
     </ul>
