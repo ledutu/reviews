@@ -210,7 +210,7 @@ async function postCreate(request, response) {
 
         await newUser.save();
         
-        History.saveHistory(user, ACTION.CREATE_USER, 'Tạo người dùng ' + newUser.email + ' thành công');
+        History.saveHistory(user, ACTION.CREATE_USER, 'Tạo người dùng ' + newUser._id + ' thành công');
 
         request.session.message = {
             status: 'success',
@@ -263,6 +263,8 @@ async function postUpdate(request, response) {
         existUser.is_block = status;
 
         await existUser.save();
+        
+        History.saveHistory(user, ACTION.CREATE_USER, 'Cập nhật người dùng ' + existUser._id + ' thành công');
 
         request.session.message = {
             status: 'success',
