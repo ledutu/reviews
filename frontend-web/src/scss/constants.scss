@@ -1,0 +1,28 @@
+$bg_white: #fff;
+$cl_white: #fff;
+$cl_black: #000;
+$cl_dark: rgb(26, 25, 25);
+$_5: 5px;
+$_8: 8px;
+$_10: 10px;
+$_20: 20px;
+$_30: 30px;
+$_45: 45px;
+$_75: 75px;
+$fs_1: 3.25rem;
+$fs_2: 3rem;
+$fs_3: 2.75rem;
+$fs_4: 2.5rem;
+$fs_5: 2.25rem;
+$fs_6: 2rem;
+$txt_2: 1.5rem;
+$txt_1: 1.25rem;
+$txt: 1rem;
+$fw_l: 300;
+$fw_b: 500;
+$fw_h: 700;
+
+@mixin reset_mp {
+  padding: 0;
+  margin: 0;
+}
