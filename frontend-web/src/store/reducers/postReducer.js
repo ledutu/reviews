@@ -15,6 +15,20 @@ export const postReducer = (state = initialState, action) => {
         loading: false,
         err: null,
       };
+    case types.GET_POST_BY_ID:
+      return {
+        ...state,
+        post: action.payload,
+        loading: false,
+        err: null,
+      };
+    case types.PUSH_POST_TO_STORE:
+      return {
+        ...state,
+        post: action.payload,
+        loading: false,
+        err: null,
+      };
 
     default:
       return state;
