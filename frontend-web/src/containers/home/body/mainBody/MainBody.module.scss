@@ -1,0 +1,60 @@
+.mainContent {
+  width: 100%;
+  margin-top: 75px;
+
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+
+  .listOfContent {
+    display: block;
+    width: 725px;
+    .itemContent:first-child {
+      border-top: 1px solid #dddddd;
+    }
+
+    .itemContent {
+      display: flex;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #dddddd;
+
+      .titleContent {
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .smallCategory {
+        color: #dddddd;
+        background-color: rgba(255, 123, 0, 0.877);
+        border-radius: 5px;
+        padding: 5px 8px;
+        cursor: pointer;
+      }
+    }
+  }
+  .mostPopular {
+    background-color: navajowhite;
+    width: 300px;
+    height: 500px;
+
+    // position: fixed;
+    // right: 0;
+    // bottom: 20px;
+    // margin-right: 90px;
+  }
+  .wrapperImage {
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 112px;
+  }
+  .imageCover {
+    filter: drop-shadow(8px 8px 10px gray) brightness(80%);
+    transition: 0.3s;
+  }
+  .imageCover:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+  }
+}
