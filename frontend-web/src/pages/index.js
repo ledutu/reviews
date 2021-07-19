@@ -3,18 +3,11 @@ import * as types from "./../store/types";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import BodyComponent from "../containers/home/body";
-import { fetchPosts } from "./../store/actions/postAction";
+import { fetchPosts, pushPostsToStore } from "./../store/actions/postAction";
 export default function Home({ posts }) {
-  console.log(posts);
-  const pushPostsToStore = () => async (dispatch) => {
-    dispatch({
-      type: types.GET_POSTS,
-      payload: posts.posts,
-    });
-  };
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(pushPostsToStore());
+    dispatch(pushPostsToStore(posts));
     return () => {};
   }, []);
 

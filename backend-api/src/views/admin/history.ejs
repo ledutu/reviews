@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - Lịch sử thao tác</title>
+
+    <!-- ========== Css Files ========== -->
+    <%- include('layouts/head') %>
+</head>
+
+<body>
+    <!-- Start Page Loading -->
+    <%- include('layouts/loading') %>
+    <!-- End Page Loading -->
+
+    <!-- START TOP -->
+    <%- include('layouts/header') %>
+    <!-- END TOP -->
+
+    <!-- START SIDEBAR -->
+    <%- include('layouts/sidebar') %>
+    <!-- END SIDEBAR -->
+
+    <%- include('layouts/notification') %>
+
+    <!-- START CONTENT -->
+    <div class="content">
+
+        <!-- Start Page Header -->
+        <div class="page-header">
+            <h1 class="title">Lịch sử thao tác</h1>
+
+            <!-- Start Page Header Right Div -->
+            <div class="right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a href="/admin/category/create" class="btn btn-light">Tạo thể loại mới</a>
+                    <a href="/admin/history" class="btn btn-light"><i class="fa fa-refresh"></i></a>
+                    <a href="#" class="btn btn-light"><i class="fa fa-search"></i></a>
+                </div>
+            </div>
+            <!-- End Page Header Right Div -->
+
+        </div>
+        <!-- End Page Header -->
+
+        <div class="container-flush">
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Tìm kiếm
+                            <ul class="panel-tools">
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <!-- <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li> -->
+                            </ul>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="#" method="GET">
+                                
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">ID người dùng</label>
+                                            <input type="text" placeholder="ID người dùng" name="user_id" class="form-control"
+                                                id="input1" value="<%- params.user_id %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Action name</label>
+                                            <select class="form-control selectpicker" name="action_name" multiple
+                                                data-live-search="true">
+                                                <% historyActions.forEach(action => { %>
+                                                <option value="<%- action.name %>"
+                                                    <%- params.action_name && params.action_name.includes(action.name) && 'selected' %>
+                                                >
+                                                    <%- action.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <label for="input1" class="form-label">Từ ngày</label>
+                                                <div class="controls">
+                                                    <div class="input-prepend input-group">
+                                                        <span class="add-on input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                        <input type="text" id="date-picker" name="date_from"
+                                                            class="form-control" placeholder="dd/mm/yyyy"
+                                                            value="<%- params.date_from %>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-6">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <label for="input1" class="form-label">Đến ngày</label>
+                                                <div class="controls">
+                                                    <div class="input-prepend input-group">
+                                                        <span class="add-on input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                        <input type="text" id="date-picker-2" name="date_to"
+                                                            class="form-control" placeholder="dd/mm/yyyy"
+                                                            value="<%- params.date_to %>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                
+                                <div class="button-container mt-20">
+                                    <a href="/admin/history" class="btn">Hủy</a>
+                                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Start Panel -->
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            Danh sách <span class="label label-default"><%- totalHistory %></span>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>User</td>
+                                            <td>Action Name</td>
+                                            <td>Comment</td>
+                                            <td>Ngày tạo</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% historyPage.data.forEach(history => { %>
+                                        <tr>
+                                            <td><%- history._id %></td>
+                                            <td><%- history.user.profile.full_name %> (<%- history.user._id %>)</td>
+                                            <td><%- history.action_name || '/' %></td>
+                                            <td><%- history.comment %></td>
+                                            <td class="datetime <%- history._id %>"><%- history.createdAt %></td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+
+                                <%- include('layouts/pagination', {
+                                    data: historyPage,
+                                    pageLink: '/admin/history'+link,
+                                }) %>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+        </div>
+    </div>
+    <!-- End Content -->
+
+
+    <%- include('layouts/javascript') %>
+    
+    <script>
+        $(document).ready(function () {
+            moment.locale('vi');
+
+            let histories = '<%- historyPage.data.map(item => item._id) %>';
+
+            histories.split(',').forEach(history => {
+                let time = $('.datetime.' + history).html();
+                $('.datetime.' + history).text(moment(new Date(time)).format('lll'));
+            })
+        });
+    </script>
+
+</body>
+
+</html>

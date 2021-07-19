@@ -5,9 +5,10 @@ const {
     Tag,
     Comment,
     Reaction,
+    History,
 } = require('../../models');
 
-const { HTTP_STATUS } = require('../../constant');
+const { HTTP_STATUS, ACTION } = require('../../constant');
 
 async function index(request, response) {
     try {
@@ -93,7 +94,7 @@ async function index(request, response) {
         }
 
         if (date_to) {
-            link += 'date_from=' + date_to + '&';
+            link += 'date_to=' + date_to + '&';
             date_to = date_to.split('/');
             date_to = new Date(date_to[2] + '-' + date_to[1] + '-' + date_to[0]);
             reviews = reviews.where('createdAt').equals({ $lte: date_to });
@@ -150,7 +151,25 @@ async function updateStatusReview(request, response) {
         }
         review[type] = !review[type];
 
+        title = '';
+        message = '';
+
+        if (type === 'is_hide') {
+            title = ACTION.HIDE_REVIEW;
+            message = (!review.is_hide ? 'Mở ẩn' : 'Ẩn') + ' bài ' + review._id + ' thành công';
+        }
+        else if (type === 'is_block') {
+            title = ACTION.BLOCK_REVIEW;
+            message = (!review.is_block ? 'Mở chặn' : 'Chặn') + ' bài ' + review._id + ' thành công';
+        }
+        else if (type === 'is_confirm') {
+            title = ACTION.CONFIRM_REVIEW;
+            message = (!review.is_confirm ? 'Tắt duyệt' : 'Duyệt') + ' bài ' + review._id + ' thành công';
+        };
+
         await review.save();
+
+        History.saveHistory(user, title, message);
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
@@ -202,7 +221,9 @@ async function deleteReview(request, response) {
         });
 
         await review.delete();
-
+        
+        History.saveHistory(user, ACTION.DELETE_REVIEW, 'Xóa bài "' + review.title + '" thành công');
+        
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
             error: false,
@@ -273,7 +294,12 @@ async function postCreate(request, response) {
             slug,
         });
         
-        // await review.save();
+        await review.save();
+        
+        History.saveHistory(user, ACTION.CREATE_REVIEW, 'Đăng bài ' + review._id + ' thành công');
+
+        user.total_review += 1;
+        await user.save();
 
         request.session.message = {
             status: 'success',
@@ -322,6 +348,8 @@ async function postUpdate(request, response) {
         if (request.files.length > 0) {
             review.image = BASE_URL + request.files[0].filename;
         }
+        
+        History.saveHistory(user, ACTION.UPDATE_REVIEW, 'Cập nhật bài ' + review._id + ' thành công');
 
         await review.save();
 
