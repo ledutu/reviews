@@ -7,6 +7,7 @@ const session = require('express-session');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var cors = require('cors')
 require('dotenv').config()
 
 var apiRouter = require('./src/routes');
@@ -15,6 +16,7 @@ var databaseRouter = require('./src/database/seed/seed.route');
 
 //middleware
 var { Admin } = require('./src/middlewares');
+const corsOpts = require('./src/cors');
 
 var app = express();
 
@@ -47,6 +49,8 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(cors(corsOpts))
 
 const {
   DB_HOST,

@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const historyActionSchema = new Schema({
     name: { type: String, require: true },
-    hide: { type: Boolean, default: false },
+    is_hide: { type: Boolean, default: false },
 }, { timestamps: { currentTime: () => Date.now() } });
 
 const HistoryAction = mongoose.model('history_actions', historyActionSchema);

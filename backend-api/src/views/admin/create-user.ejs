@@ -63,7 +63,7 @@
                 
                         <div class="panel-body">
                             <form 
-                                action="<%- id? '/admin/tag/update' : '/admin/tag/create' %>" 
+                                action="<%- id? '/admin/user/update' : '/admin/user/create' %>" 
                                 method="post" 
                             >
                                 <input type="hidden" name="id" value="<%- id %>">
@@ -72,16 +72,28 @@
                                     <input type="text" class="form-control" name="full_name" placeholder="Tên đầy đủ" value="<%- user.profile && user.profile.full_name %>" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="input1" class="form-label">Bút danh</label>
+                                    <input type="text" class="form-control" name="username" placeholder="Bút danh" value="<%- user.profile && user.profile.username %>" minlength="6">
+                                </div>
+                                <div class="form-group">
                                     <label for="input1" class="form-label">Email</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Email" value="<%- user.email %>" required>
+                                    <input type="email" class="form-control" name="email" placeholder="Email" value="<%- user.email %>" required <%- user.email && 'readonly' %>>
                                 </div>
                                 <div class="form-group">
                                     <label for="input1" class="form-label">Mật khẩu</label>
-                                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
+                                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu" <%- !user._id && 'required' %> minlength="6">
                                 </div>
                                 <div class="form-group">
                                     <label for="input1" class="form-label">Xác nhận mật khẩu</label>
-                                    <input type="password" class="form-control" name="password_confirm" placeholder="Xác nhận mật khẩu" required>
+                                    <input type="password" class="form-control" name="password_confirm" placeholder="Xác nhận mật khẩu" <%- !user._id && 'required' %> minlength="6">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Giới tính</label>
+                                    <select class="form-control selectpicker" name="gender">
+                                        <option value="men" <%- user.profile && user.profile.gender === 'men' && 'selected' %>>Nam</option>
+                                        <option value="women" <%- user.profile && user.profile.gender === 'women' && 'selected' %>>Nữ</option>
+                                        <option value="third" <%- user.profile && user.profile.gender === 'third' && 'selected' %>>Khác</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Trạng thái</label>

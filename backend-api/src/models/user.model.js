@@ -14,7 +14,7 @@ const userSchema = new Schema({
         username: { type: String, default: '' },
         full_name: { type: String, default: '' },
         address: { type: String, default: '' },
-        image: { type: String, default: '/user/images/no-image.jpg' },
+        image: { type: String, default: '/images/no-image.jpg' },
         gender: { type: String, enum: ['men', 'women', 'third'], default: 'men' },
         birthday: { type: Date, default: Date.now() },
     },
@@ -31,8 +31,8 @@ const userSchema = new Schema({
 
 //Create new function
 userSchema.statics.authenticate = async function (email, password, isAdmin, callbackResult, callbackErr) {
-    User.findOne({ email }).select([
-        'google_id', 'facebook_id', 'tokens'
+    User.findOne({ $or: [{ email }, { 'profile.username': email }] }).select([
+        'google_id', 'facebook_id', 'tokens', 'is_block'
     ]).exec(async function (err, user) {
         if (err) {
             var error = new Error();
@@ -50,7 +50,7 @@ userSchema.statics.authenticate = async function (email, password, isAdmin, call
 
         if (user.google_id) {
             var err = new Error();
-            err.message = 'Account này đăng nhập bằng google.';
+            err.message = 'Tài khoản này đăng nhập bằng google.';
             err.status = 401;
             err.code = 'UN_AUTHORIZED';
             return callbackErr(err);
@@ -58,7 +58,7 @@ userSchema.statics.authenticate = async function (email, password, isAdmin, call
 
         if (user.facebook_id) {
             var err = new Error();
-            err.message = 'Account này đăng nhập bằng facebook.';
+            err.message = 'Tài khoản này đăng nhập bằng facebook.';
             err.status = 401;
             err.code = 'UN_AUTHORIZED';
             return callbackErr(err);
@@ -67,8 +67,17 @@ userSchema.statics.authenticate = async function (email, password, isAdmin, call
         userPassword = await User.findById(user._id).select(['password']);
         bcrypt.compare(password, userPassword.password, async function (err, result) {
             if (result) {
-                if(isAdmin) return callbackResult(user);
+                if (user.is_block) {
+                    var err1 = new Error();
+                    err1.message = 'Tài khoản này đang bị chặn.';
+                    err1.status = 401;
+                    err1.code = 'UN_AUTHORIZED';
+                    console.log('Go HERE')
+                    return callbackErr(err1);
+                }
                 
+                if (isAdmin) return callbackResult(user);
+
                 let token = jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
                     expiresIn: '30d'
                 });

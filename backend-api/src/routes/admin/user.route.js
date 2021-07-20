@@ -11,5 +11,7 @@ router.put('/', Auth.isAdminApi, UserController.updateStatusUser);
 router.delete('/', Auth.isAdminApi, UserController.deleteUser);
 
 router.get('/create', UserController.getCreate);
+router.post('/create', UserController.postCreate);
+router.post('/update', UserController.postUpdate);
 
 module.exports = router;

@@ -13,8 +13,8 @@ async function getReviewWithCategory(request, response) {
         page = parseInt(page);
         limit = parseInt(limit)
 
-        if (!page) page = 1;
-        if (!limit) limit = 10;
+        // if (!page) page = 1;
+        // if (!limit) limit = 10;
 
         reviews = Review.find({
             is_confirm: true,
@@ -28,15 +28,21 @@ async function getReviewWithCategory(request, response) {
         if (category_id) {
             reviews = reviews.where('category').equals(category_id);
             totalReview = reviews.where('category').equals(category_id);
+            ReviewCategory.increaseVisited(category_id);
         }
 
-        reviews = await reviews
+        reviews = reviews
             .sort({ createdAt: -1 })
             .select(['-is_confirm', '-is_hide', '-is_block'])
-            .populate('category', ['short_name', 'tag_color', 'name'])
-            .skip((page * limit) - limit)
-            .limit(limit)
-            .lean();
+            .populate('category', ['short_name', 'tag_color', 'name']);
+
+        if (limit) {
+            reviews = reviews
+                .skip((page * limit) - limit)
+                .limit(limit)
+        }
+
+        reviews = await reviews.lean();
 
         totalReview = await totalReview.countDocuments();
 
@@ -58,7 +64,7 @@ async function getReviewWithCategory(request, response) {
 async function getReviewDetail(request, response) {
     try {
         const { id } = request.params;
-        
+
         review = await Review.findOne({
             _id: id,
             is_confirm: true,
@@ -66,14 +72,16 @@ async function getReviewDetail(request, response) {
         }).select([
             '-is_confirm', '-is_hide', '-is_block'
         ]).populate('category', ['name', 'short_name', 'tag_color'])
-        .populate('reviewer', ['profile']);
-        
-        if(!review) {
+            .populate('reviewer', ['profile']);
+
+        if (!review) {
             let err = new Error();
             err.code = HTTP_TEXT.NOT_FOUND;
             throw err;
         }
         
+        Review.increaseVisited(review._id);
+
         return response.status(HTTP_STATUS.OK).json(review);
     } catch (err) {
         return response.status(HTTP_STATUS.SERVER_ERROR).json(error(err.code));

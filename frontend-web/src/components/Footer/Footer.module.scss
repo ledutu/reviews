@@ -1,5 +1,77 @@
 .container{
-    height: 31.54vh;
+    height: 323px;
     color: #ffffff;
     background-color: #002E46;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    *:focus{
+        outline: none;
+    };
+    .content{
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .quickLink{
+            height: 70%;
+            width: 70%;
+            font-family: 'Segoe UI';
+            ul{ 
+                padding: 0;
+                list-style-type: none;
+                li{
+                    padding-top: 10px;
+                    :hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
+            
+        }
+        .category{
+          
+        }
+        .contacts{
+           
+        }
+        .keepTouch{
+            ul{
+                list-style-type: none;
+                padding: 0;
+                li input{
+                    height: 32px;
+                    border: 1px solid #E5E5E5;
+                    border-radius: 3px;
+                }
+            }
+            .inputEmail{
+                display: flex;
+                flex-direction: row;
+                .submit{
+                    background-color: #1B4BA8;
+                    color: white;
+                    margin-left: 3px;
+                }
+                input:hover[type="submit"] 
+                {
+                    background: white;
+                    color: black;
+                }
+                input{
+                    font-size: 14px;
+                    font-weight: 500;
+                    font-family: 'Segoe UI';
+                }
+
+
+            }
+            .socialContacts{
+                display: flex;
+                justify-content: space-between;
+            }
+            
+        }
+    }
+    
 }
