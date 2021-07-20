@@ -226,14 +226,17 @@
                                             <td>
                                                 <a href="/admin/review/create?id=<%- review._id %>"
                                                     class="view-icon margin-r-5"><i class="fa fa-eye"></i></a>
-                                                <a onclick="confirmBeforeAction('<%- review._id %>', 'is_hide', 'Ẩn', 'Bạn có muốn ẩn bài review này không?')"
-                                                    class="hide-icon margin-r-5"><i class="fa fa-ban"></i></a>
-                                                <a onclick="confirmBeforeAction('<%- review._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn bài này không?')"
-                                                    class="block-icon margin-r-5"><i class="fa fa-lock"></i></a>
-                                                <a onclick="confirmBeforeAction('<%- review._id %>', 'is_confirm', 'Duyệt', 'Bạn có muốn duyệt bài này không?')"
-                                                    class="confirm-icon margin-r-5"><i class="fa fa-check"></i></a>
-                                                <a onclick="confirmBeforeDelete('<%- review._id %>')"
-                                                    class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
+                                                <% if (admin.role === 1) { %>
+                                                    <a onclick="confirmBeforeAction('<%- review._id %>', 'is_hide', 'Ẩn', 'Bạn có muốn ẩn bài review này không?')"
+                                                        class="hide-icon margin-r-5"><i class="fa fa-ban"></i></a>
+                                                    <a onclick="confirmBeforeAction('<%- review._id %>', 'is_block', 'Chặn', 'Bạn có muốn chặn bài này không?')"
+                                                        class="block-icon margin-r-5"><i class="fa fa-lock"></i></a>
+                                                    <a onclick="confirmBeforeAction('<%- review._id %>', 'is_confirm', 'Duyệt', 'Bạn có muốn duyệt bài này không?')"
+                                                        class="confirm-icon margin-r-5"><i class="fa fa-check"></i></a>
+                                                    <a onclick="confirmBeforeDelete('<%- review._id %>')"
+                                                        class="delete-icon margin-r-5"><i class="fa fa-times"></i></a>
+                                                <% } %>
+                                                    
                                             </td>
                                         </tr>
                                         <% }) %>
