@@ -28,6 +28,11 @@ async function index(request, response) {
         link = '?';
 
         let totalReview = Review.find({});
+        
+        if(user.role === 2) {
+            reviews = reviews.where('reviewer').equals(user._id); 
+            totalReview = totalReview.where('reviewer').equals(user._id);
+        }
 
         if (title) {
             link += 'title=' + title + '&';

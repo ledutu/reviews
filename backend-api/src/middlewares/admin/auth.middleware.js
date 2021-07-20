@@ -1,6 +1,6 @@
 function isAdmin(req, res, next) {
     if (req.user) {
-        if (req.user.role === 1) {
+        if (req.user.role === 1 || req.user.role === 2) {
             req.app.locals.admin = req.user;
             console.log('admin');
             return next();
@@ -8,7 +8,7 @@ function isAdmin(req, res, next) {
         console.log('no admin');
         req.session.message = {
             status: 'error',
-            content: 'Tài khoản không phải admin',
+            content: 'Tài khoản không phải admin hoặc CTV',
         }
         req.app.locals.admin = undefined;
         return res.redirect('/admin/auth/login');
@@ -20,6 +20,20 @@ function isAdmin(req, res, next) {
     }
     req.app.locals.admin = undefined;
     return res.redirect('/admin/auth/login');
+}
+
+function isSuperAdmin(req, res, next) {
+    if(req.user) {
+        if (req.user.role === 1) {
+            return next();
+        }
+    }
+    
+    req.session.message = {
+        status: 'error',
+        content: 'Bạn không có quyền để truy cập vào trang này',
+    }
+    return res.redirect('/admin/review');
 }
 
 function isAdminApi(req, res, next) {
@@ -40,4 +54,5 @@ function isAdminApi(req, res, next) {
 module.exports = {
     isAdmin,
     isAdminApi,
+    isSuperAdmin,
 }

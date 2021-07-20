@@ -8,7 +8,7 @@ passport.use(new LocalStrategy({
     session: true,
     passReqToCallback: true,
 }, function (request, email, password, done) {
-    User.authenticate(email, password.toString(), true, result => {
+    User.authenticate(email.trim(), password.toString().trim(), true, result => {
         return done(null, result);
     }, err => {
         return done(err, false)
