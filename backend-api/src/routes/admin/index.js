@@ -17,8 +17,10 @@ router.use('/util', util);
 
 router.use(Admin.Auth.isAdmin);
 router.use('/review', review);
-router.use('/dashboard', dashboard);
 router.use('/admin', admin);
+
+router.use(Admin.Auth.isSuperAdmin);
+router.use('/dashboard', dashboard);
 router.use('/tag', tag);
 router.use('/user', user);
 router.use('/category', category);
