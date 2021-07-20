@@ -259,7 +259,7 @@ export const fetchPosts = async () => {
       `http://api.reviewduthu.vn/api/review/category`
     );
 
-    return responseData.data;
+    return response.data.data;
   } catch (error) {
     console.log(error);
   }
