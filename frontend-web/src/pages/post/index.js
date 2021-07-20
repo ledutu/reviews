@@ -8,7 +8,7 @@ function Post({ router }) {
   const post = useSelector((state) => state.postReducer.post);
   const { id } = router.query;
   useEffect(() => {
-    if (!post && id) {
+    if (!post._id && id) {
       // get content from API
       dispatch(fetchPostByID(id));
     }
