@@ -31,8 +31,8 @@ function postLogin(req, res, next) {
                     status: 'success',
                     content: 'Đăng nhập thành công',
                 }
-
-                return res.redirect('/admin/dashboard');
+                
+                return res.redirect(user.role === 1? '/admin/dashboard': '/admin/review');
             })
         }
     })(req, res, next);
