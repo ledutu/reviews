@@ -11,6 +11,7 @@ const reviewSchema = new Schema({
     slug: { type: String, default: '' },
     rate: { type: Number, default: 0 },
     visited: { type: Number, default: 0 },
+    is_schedule: { type: Boolean, default: false },
     is_confirm: { type: Boolean, default: false },
     is_hide: { type: Boolean, default: false },
     is_block: { type: Boolean, default: false },

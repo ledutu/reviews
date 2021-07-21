@@ -156,6 +156,16 @@ Below codes are only for index widgets
         }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
       });
+      
+      $('#date-picker-with-time').daterangepicker({ 
+          singleDatePicker: true,
+          timePicker: true,
+          timePickerIncrement: 30,
+          timePicker12Hour: false,
+          format: 'DD/MM/YYYY hh:mm A'
+        }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+      });
     });
 </script>
     

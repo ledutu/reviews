@@ -101,7 +101,7 @@ async function postCreate(request, response) {
 
         await tag.save();
         
-        History.saveHistory(user, ACTION.CREATE_TAG, 'Tạo tag ' + tag._id + ' thành công');
+        History.saveHistory(user._id, ACTION.CREATE_TAG, 'Tạo tag ' + tag._id + ' thành công');
 
         request.session.message = {
             status: 'success',
@@ -144,7 +144,7 @@ async function postUpdate(request, response) {
 
         await tag.save();
         
-        History.saveHistory(user, ACTION.UPDATE_TAG, 'Cập nhật tag ' + tag._id + ' thành công');
+        History.saveHistory(user._id, ACTION.UPDATE_TAG, 'Cập nhật tag ' + tag._id + ' thành công');
 
         request.session.message = {
             status: 'success',
@@ -183,7 +183,7 @@ async function updateStatusTag(request, response) {
         await tag.save();
         
         History.saveHistory(
-            user,
+            user._id,
             ACTION.BLOCK_TAG,
             (!tag.is_block ? 'Mở chặn' : 'Chặn') + ' tag ' + tag._id + ' thành công'
         );
@@ -219,7 +219,7 @@ async function deleteTag(request, response) {
 
         await tag.delete();
         
-        History.saveHistory(user, ACTION.DELETE_TAG, 'Xóa tag "' + tag.name + '" thành công');
+        History.saveHistory(user._id, ACTION.DELETE_TAG, 'Xóa tag "' + tag.name + '" thành công');
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,

@@ -100,7 +100,7 @@ async function updateStatusCategory(request, response) {
         await category.save();
 
         History.saveHistory(
-            user,
+            user._id,
             ACTION.BLOCK_CATEGORY,
             (!category.is_block ? 'Mở chặn' : 'Chặn') + ' thể loại ' + category._id + ' thành công'
         );
@@ -136,7 +136,7 @@ async function deleteCategory(request, response) {
 
         await category.delete();
 
-        History.saveHistory(user, ACTION.DELETE_CATEGORY, 'Xóa thể loại "' + category.name + '" thành công');
+        History.saveHistory(user._id, ACTION.DELETE_CATEGORY, 'Xóa thể loại "' + category.name + '" thành công');
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
@@ -202,7 +202,7 @@ async function postCreate(request, response) {
 
         await category.save();
         
-        History.saveHistory(user, ACTION.CREATE_CATEGORY, 'Tạo thể loại "' + category._id + '" thành công');
+        History.saveHistory(user._id, ACTION.CREATE_CATEGORY, 'Tạo thể loại "' + category._id + '" thành công');
 
         request.session.message = {
             status: 'success',
@@ -263,7 +263,7 @@ async function postUpdate(request, response) {
 
         await category.save();
         
-        History.saveHistory(user, ACTION.CREATE_CATEGORY, 'Cập nhật thể loại "' + category._id + '" thành công');
+        History.saveHistory(user._id, ACTION.CREATE_CATEGORY, 'Cập nhật thể loại "' + category._id + '" thành công');
 
         request.session.message = {
             status: 'success',
