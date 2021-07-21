@@ -96,7 +96,7 @@ async function updateStatusUser(request, response) {
         await user.save();
 
         History.saveHistory(
-            request.user,
+            request.user._id,
             ACTION.BLOCK_USER,
             (!user.is_block ? 'Mở chặn' : 'Chặn') + ' người dùng ' + user._id + ' thành công'
         );
@@ -132,7 +132,7 @@ async function deleteUser(request, response) {
 
         await user.delete();
 
-        History.saveHistory(request.user, ACTION.DELETE_USER, 'Xóa người dùng "' + user.email + '" thành công');
+        History.saveHistory(request.user._id, ACTION.DELETE_USER, 'Xóa người dùng "' + user.email + '" thành công');
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
@@ -210,7 +210,7 @@ async function postCreate(request, response) {
 
         await newUser.save();
         
-        History.saveHistory(user, ACTION.CREATE_USER, 'Tạo người dùng ' + newUser._id + ' thành công');
+        History.saveHistory(user._id, ACTION.CREATE_USER, 'Tạo người dùng ' + newUser._id + ' thành công');
 
         request.session.message = {
             status: 'success',
@@ -264,7 +264,7 @@ async function postUpdate(request, response) {
 
         await existUser.save();
         
-        History.saveHistory(user, ACTION.CREATE_USER, 'Cập nhật người dùng ' + existUser._id + ' thành công');
+        History.saveHistory(user._id, ACTION.CREATE_USER, 'Cập nhật người dùng ' + existUser._id + ' thành công');
 
         request.session.message = {
             status: 'success',
