@@ -28,9 +28,9 @@ async function index(request, response) {
         link = '?';
 
         let totalReview = Review.find({});
-        
-        if(user.role === 2) {
-            reviews = reviews.where('reviewer').equals(user._id); 
+
+        if (user.role === 2) {
+            reviews = reviews.where('reviewer').equals(user._id);
             totalReview = totalReview.where('reviewer').equals(user._id);
         }
 
@@ -174,7 +174,7 @@ async function updateStatusReview(request, response) {
 
         await review.save();
 
-        History.saveHistory(user, title, message);
+        History.saveHistory(user._id, title, message);
 
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
@@ -226,9 +226,9 @@ async function deleteReview(request, response) {
         });
 
         await review.delete();
-        
-        History.saveHistory(user, ACTION.DELETE_REVIEW, 'Xóa bài "' + review.title + '" thành công');
-        
+
+        History.saveHistory(user._id, ACTION.DELETE_REVIEW, 'Xóa bài "' + review.title + '" thành công');
+
         return response.status(HTTP_STATUS.OK).json({
             status: HTTP_STATUS.OK,
             error: false,
@@ -282,7 +282,7 @@ async function uploadImageTextEditor(request, response) {
 
 async function postCreate(request, response) {
     try {
-        let { title, category, slug, content, summary, tag } = request.body;
+        let { title, category, slug, content, summary, tag, is_schedule, created_at } = request.body;
 
         user = request.user;
         const BASE_URL = '/statics/uploads/users/' + user._id + '/reviews/';
@@ -296,12 +296,25 @@ async function postCreate(request, response) {
             reviewer: user._id,
             image,
             category,
+            is_schedule: is_schedule? true: false,
             slug,
         });
-        
+
+        if (is_schedule) {
+            if (created_at) {
+                created_at = created_at.split(' ');
+                let date = created_at[0].split('/');
+                let time = created_at[1];
+                
+                let dateResult = new Date(`${date[2]}-${date[1]}-${date[0]} ${time}`);
+                
+                review.createdAt = dateResult;
+            }
+        }
+
         await review.save();
-        
-        History.saveHistory(user, ACTION.CREATE_REVIEW, 'Đăng bài ' + review._id + ' thành công');
+
+        History.saveHistory(user._id, ACTION.CREATE_REVIEW, 'Đăng bài ' + review._id + ' thành công');
 
         user.total_review += 1;
         await user.save();
@@ -353,8 +366,8 @@ async function postUpdate(request, response) {
         if (request.files.length > 0) {
             review.image = BASE_URL + request.files[0].filename;
         }
-        
-        History.saveHistory(user, ACTION.UPDATE_REVIEW, 'Cập nhật bài ' + review._id + ' thành công');
+
+        History.saveHistory(user._id, ACTION.UPDATE_REVIEW, 'Cập nhật bài ' + review._id + ' thành công');
 
         await review.save();
 

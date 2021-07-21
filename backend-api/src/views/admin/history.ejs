@@ -162,7 +162,7 @@
                                         <% historyPage.data.forEach(history => { %>
                                         <tr>
                                             <td><%- history._id %></td>
-                                            <td><%- history.user.profile.full_name %> (<%- history.user._id %>)</td>
+                                            <td><%- (history.user && history.user.profile.full_name) || 'Hệ thống' %><%- history.user && ' ('+history.user._id+')' %></td>
                                             <td><%- history.action_name || '/' %></td>
                                             <td><%- history.comment %></td>
                                             <td class="datetime <%- history._id %>"><%- history.createdAt %></td>

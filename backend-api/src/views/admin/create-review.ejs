@@ -107,6 +107,22 @@
                                     <textarea name="summary" placeholder="Tóm tắt" id=""class="form-control" rows="5"><%- review.summary %></textarea>
                                 </div>
                                 
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="is_schedule" type="checkbox" name="is_schedule">
+                                        <label for="is_schedule">
+                                            Kế hoạch ngày đăng bài
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="input-prepend input-group scheduled">
+                                        <span class="add-on input-group-addon"><i
+                                                class="fa fa-calendar"></i></span>
+                                        <input type="text" id="date-picker-with-time" name="created_at"
+                                            class="form-control" placeholder="dd/mm/yyyy hh:mm" disabled/>
+                                    </div>
+                                </div>
+                                
                                 <p><i>Lưu ý: Để hình ảnh của bạn trong đẹp hơn, vui lòng đăng những ảnh theo kích thước dưới đây</i></p>
                                 
                                 <label class="form-label">Ảnh bài review</label>
@@ -150,8 +166,6 @@
                                 
                                 <button id="submitButton" onclick="handleClick()" type="submit" class="btn btn-default"><%- id? 'Cập nhật': 'Đăng bài' %></button>
                             </form>
-            
-                            <button onclick="handleClick()">test</button>
                             
                         </div>
                 
@@ -204,6 +218,18 @@
             failure(error.response.data.message)
         }
     };
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#is_schedule').change(function() {
+            if($(this).is(':checked')) {
+                $("#date-picker-with-time").removeAttr('disabled');
+            } else {
+                $("#date-picker-with-time").attr('disabled', 'disabled');
+            }
+        })
+    });
 </script>
 
 </body>

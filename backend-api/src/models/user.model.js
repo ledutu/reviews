@@ -32,7 +32,7 @@ const userSchema = new Schema({
 //Create new function
 userSchema.statics.authenticate = async function (email, password, isAdmin, callbackResult, callbackErr) {
     User.findOne({ $or: [{ email }, { 'profile.username': email }] }).select([
-        'google_id', 'facebook_id', 'tokens', 'is_block'
+        'google_id', 'facebook_id', 'tokens', 'is_block', 'role'
     ]).exec(async function (err, user) {
         if (err) {
             var error = new Error();

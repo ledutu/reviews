@@ -213,6 +213,9 @@
                                             <td>
                                                 <span
                                                     class="label <%- review.is_confirm? 'label-success': 'label-warning' %>"><%- review.is_confirm? 'Đã duyệt': 'Chờ duyệt' %></span>
+                                                <% if (review.is_schedule) { %>
+                                                    <span class="label label-info">Kế hoạch</span>
+                                                <% } %>
                                                 <% if (review.is_hide) { %>
                                                     <span class="label label-danger">Đã ẩn</span>
                                                 <% } %>
