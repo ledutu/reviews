@@ -10,6 +10,7 @@
 
 <!-- ========== Css Files ========== -->
 <%- include('layouts/head') %> 
+<link rel="stylesheet" href="/admin/css/dashboard.css">
 
 
 </head>
@@ -96,53 +97,35 @@
                 <div class="col-md-12 col-lg-12">
                 <div class="panel panel-widget" style="height:450px;">
                     <div class="panel-title">
-                    My Files <span class="label label-danger">29</span>
+                    My Files <span class="label label-danger"><%- folders.length %></span>
                     <ul class="panel-tools">
-                        <li><a class="icon"><i class="fa fa-refresh"></i></a></li>
-                        <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        <li><a onclick="window.history.back()" class="icon"><i class="fa fa-arrow-left"></i></a></li>
+                        <li><a href="/admin/dashboard" class="icon"><i class="fa fa-refresh"></i></a></li>
+                        <li><a href="" class="icon closed-tool"><i class="fa fa-times"></i></a></li>
                     </ul>
                     </div>
                     <div class="panel-body table-responsive">
 
                     <table class="table table-dic table-hover ">
                         <tbody>
-                        <tr>
-                            <td><i class="fa fa-folder-o"></i>Projects</td>
-                            <td>Folder</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-file-archive-o"></i>Backup</td>
-                            <td>Zip</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-file-code-o"></i>Kode Theme</td>
-                            <td>Html</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-file-pdf-o"></i>Documents</td>
-                            <td>Pdf</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-folder-o"></i>Themes</td>
-                            <td>Folder</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-folder-o"></i>Uploaded Files</td>
-                            <td>Folder</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-folder-o"></i>Personal Files</td>
-                            <td>Folder</td>
-                            <td class="text-r">27/2/2015 12:34 AM</td>
-                        </tr>
+                            <% folders.forEach(folder => { %>
+                                <tr>
+                                    <td>
+                                        <a href="<%- folder.type === 'file'? folder.path: '/admin/dashboard'+link+'folder_name='+folder.name %>" target="<%- folder.type === 'file'? '_blank': '' %>">
+                                            <i class="fa <%- folder.type === 'folder'? 'fa-folder-o': 'fa-file-image-o' %>"></i><%- folder.name %>
+                                        </a>
+                                    </td>
+                                    <td><%- folder.type %></td>
+                                    <td class="text-r">27/2/2015 12:34 AM</td>
+                                </tr>     
+                            <% }) %>
                         </tbody>
+                        
                     </table>          
+                    <%- include('layouts/pagination', {
+                        data: folders,
+                        pageLink: '/admin/dashboard'+link,
+                    }) %>
 
                     </div>
                 </div>
