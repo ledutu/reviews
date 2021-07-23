@@ -11,7 +11,7 @@ function TopContent(props) {
   const renderSubContent = () => {
     var arr = [];
     arr.push(posts[1]);
-    arr.push(posts[2]);
+    //arr.push(posts[2]);
     if (!posts) {
       return null;
     }
@@ -19,27 +19,29 @@ function TopContent(props) {
     return arr.map((item) => {
       return (
         <div key={item._id}>
-          <Link
-            href={{
-              pathname: `/post`,
-              query: { id: item._id },
-            }}
-          >
-            <div
-              className={styles.wrapperImage}
-              onClick={() => {
-                handleClickLink(item);
+          <a>
+            <Link
+              href={{
+                pathname: `/post`,
+                query: { id: item._id },
               }}
             >
-              <Image
-                className={styles.imageCover}
-                src={item.image}
-                width="300"
-                height="160"
-                alt="newestContent"
-              />
-            </div>
-          </Link>
+              <div
+                className={styles.wrapperImage}
+                onClick={() => {
+                  handleClickLink(item);
+                }}
+              >
+                <Image
+                  className={styles.imageCover}
+                  src={"http://api.reviewduthu.vn" + item.image}
+                  width="300"
+                  height="160"
+                  alt="newestContent"
+                />
+              </div>
+            </Link>
+          </a>
           <h3 className={styles.title}>{item.title}</h3>
         </div>
       );
@@ -67,7 +69,7 @@ function TopContent(props) {
             >
               <Image
                 className={styles.imageCover}
-                src={posts[0].image}
+                src={"http://api.reviewduthu.vn" + posts[0].image}
                 width="720"
                 height="405"
                 alt="newestContent"

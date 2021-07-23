@@ -20,7 +20,8 @@
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
-    "sass": "^1.35.1"
+    "sass": "^1.35.1",
+    "tinymce": "^5.8.2"
   },
   "devDependencies": {
     "eslint": "7.29.0",
