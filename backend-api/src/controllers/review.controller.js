@@ -88,6 +88,72 @@ async function getReviewDetail(request, response) {
     }
 }
 
+async function getLatestReview(request, response) {
+    try {
+        let { limit, category_id } = request.query;
+
+        limit = parseInt(limit)
+
+        if (!limit) limit = 5;
+
+        reviews = Review.find({
+            is_confirm: true,
+            is_hide: false,
+        });
+        
+        if (category_id) {
+            reviews = reviews.where('category').equals(category_id);
+        }
+
+        reviews = reviews
+            .sort({ createdAt: -1 })
+            .select(['-is_confirm', '-is_hide', '-is_block'])
+            .populate('category', ['short_name', 'tag_color', 'name'])
+            .limit(limit)
+
+        reviews = await reviews.lean();
+
+        return response.status(HTTP_STATUS.OK).json(reviews);
+
+    } catch (err) {
+        console.log(err);
+        return response.status(HTTP_STATUS.SERVER_ERROR).json(error());
+    }
+}
+
+async function getRatestReview(request, response) {
+    try {
+        let { limit, category_id } = request.query;
+
+        limit = parseInt(limit)
+
+        if (!limit) limit = 5;
+
+        reviews = Review.find({
+            is_confirm: true,
+            is_hide: false,
+        });
+        
+        if (category_id) {
+            reviews = reviews.where('category').equals(category_id);
+        }
+
+        reviews = reviews
+            .sort({ rate: -1 })
+            .select(['-is_confirm', '-is_hide', '-is_block'])
+            .populate('category', ['short_name', 'tag_color', 'name'])
+            .limit(limit)
+
+        reviews = await reviews.lean();
+
+        return response.status(HTTP_STATUS.OK).json(reviews);
+
+    } catch (err) {
+        console.log(err);
+        return response.status(HTTP_STATUS.SERVER_ERROR).json(error());
+    }
+}
+
 function editReviewDetail(request, response) {
 
 }
@@ -101,4 +167,6 @@ module.exports = {
     getReviewDetail,
     editReviewDetail,
     deleteReviewDetail,
+    getLatestReview,
+    getRatestReview,
 }

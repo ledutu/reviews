@@ -69,6 +69,15 @@
                         <div class="panel-body">
                             <form action="#" method="GET">
                                 <div class="row">
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label for="input1" class="form-label">ID</label>
+                                            <input type="text" placeholder="ID" name="_id" class="form-control"
+                                                id="input1" value="<%- params._id %>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-12 col-lg-6">
                                         <div class="form-group">
                                             <label for="input1" class="form-label">Tiêu đề</label>
@@ -189,6 +198,7 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
+                                            <td>ID</td>
                                             <td>Tiêu đề</td>
                                             <td>Slug</td>
                                             <td>Tác giả</td>
@@ -202,6 +212,7 @@
                                     <tbody>
                                         <% reviewPage.data.forEach(review => { %>
                                         <tr>
+                                            <td style="width: 150px;"><%- review._id %></td>
                                             <td><%- review.title %></td>
                                             <td><%- review.slug %></td>
                                             <td><%- review.reviewer && review.reviewer.profile.full_name %></td>
