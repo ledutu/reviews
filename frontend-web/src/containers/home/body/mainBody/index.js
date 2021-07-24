@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { pushPostToStore } from "../../../../store/actions/postAction";
+import SideBar from "../../../../components/sidebar";
 function MainContent(props) {
   const dispatch = useDispatch();
   const posts = props.posts.posts;
@@ -64,7 +65,7 @@ function MainContent(props) {
   return (
     <div className={styles.mainContent}>
       <div className={styles.listOfContent}>{renderListOfContents()}</div>
-      <div className={styles.mostPopular}></div>
+      <SideBar />
     </div>
   );
 }
