@@ -31,7 +31,11 @@ function Post({ router }) {
     //a.innerHTML = post.content;
     var b = a.querySelectorAll("img");
     b.forEach((ele) => {
-      return (ele.style.width = "720px"), (ele.style.marginLeft = "15px");
+      return (
+        (ele.style.width = "720px"),
+        (ele.style.height = "405px"),
+        (ele.style.marginLeft = "2.5px")
+      );
     });
   };
   if (!post.content) return <p>Loading...!</p>;
