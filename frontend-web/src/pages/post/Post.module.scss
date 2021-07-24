@@ -1,3 +1,13 @@
-.postContent {
+.wrapperPostDetail {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  position: relative;
   padding: 45px 90px;
+  .postContent {
+    width: 750px;
+  }
+  .postSideBar {
+    position: sticky;
+  }
 }
