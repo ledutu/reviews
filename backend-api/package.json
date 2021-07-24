@@ -32,6 +32,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "sweetalert": "^2.1.2",
+    "telegraf": "^4.4.1",
     "tinymce": "^5.8.2",
     "validator": "^13.6.0"
   },

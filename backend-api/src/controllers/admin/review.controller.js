@@ -12,9 +12,9 @@ const { HTTP_STATUS, ACTION } = require('../../constant');
 
 async function index(request, response) {
     try {
-        let { page, limit, title, category, tag, status, date_from, date_to } = request.query;
+        let { page, limit, title, category, tag, status, date_from, date_to, _id } = request.query;
 
-        let params = { title, category, date_from, date_to, tag, status };
+        let params = { title, category, date_from, date_to, tag, status, _id };
 
         page = parseInt(page);
         limit = parseInt(limit)
@@ -32,6 +32,12 @@ async function index(request, response) {
         if (user.role === 2) {
             reviews = reviews.where('reviewer').equals(user._id);
             totalReview = totalReview.where('reviewer').equals(user._id);
+        }
+        
+        if (_id) {
+            link += '_id=' + _id + '&';
+            reviews = reviews.where('_id').equals(_id);
+            totalReview = totalReview.where('_id').equals(_id);
         }
 
         if (title) {
