@@ -395,6 +395,18 @@ a {
   border: none;
 }
 
+.border-3 {
+  border-radius: 3px;
+}
+
+.border-5 {
+  border-radius: 5px;
+}
+
+.border-8 {
+  border-radius: 8px;
+}
+
 /** Display **/
 .display-block {
   display: block;
@@ -482,4 +494,35 @@ a {
 }
 .f-underline {
   text-decoration: underline;
+}
+.flex-row-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-row-around {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.text-three-dot-height {
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden !important;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
+  display: -webkit-box;
 }

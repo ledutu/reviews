@@ -2,7 +2,7 @@ import axios from 'axios';
 import { CONFIG } from '../constants';
 
 const instance = axios.create({
-  baseURL: CONFIG.BASE_URL,
+  baseURL: CONFIG.BASE_API,
   ContentType: 'application/json'
 });
 
