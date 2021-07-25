@@ -22,6 +22,12 @@ $fw_l: 300;
 $fw_b: 500;
 $fw_h: 700;
 
+:root {
+  --next-color-primary: #0581c9;
+  --next-color-black: #333333;
+  --next-color-white: #ffffff;
+}
+
 @mixin reset_mp {
   padding: 0;
   margin: 0;

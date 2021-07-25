@@ -4,7 +4,7 @@
     outline: none;
   }
   .information {
-    height: 70px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,13 +20,17 @@
       justify-content: space-between;
       align-items: center;
       font-family: "Segoe UI";
+      
+      .right {
+        display: flex;
+        flex-direction: row;
+      }
+      
       .search {
-        background-color: white;
         display: flex;
         justify-content: center;
         height: 32px;
         width: 238px;
-        border: 1px solid #e5e5e5;
         border-radius: 16px;
         padding-left: 10px;
         input {
@@ -69,7 +73,7 @@
   }
   .nav {
     height: 44px;
-    background-color: #0581c9;
+    background-color: var(--next-color-primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,4 +100,8 @@
       }
     }
   }
+}
+
+.test { 
+  color: var(--next-color-black) !important;
 }
