@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 import styles from './Footer.module.scss'
-import iconfacebook from '../../assets/home/iconfacebook.png'
-import icontwitter from '../../assets/home/icontwitter.png'
-import iconinstagram from '../../assets/home/iconinstagram.png'
-import iconyoutube from '../../assets/home/iconyoutube.png'
+import iconfacebook from '../../assets/images/home/iconfacebook.png'
+import icontwitter from '../../assets/images/home/icontwitter.png'
+import iconinstagram from '../../assets/images/home/iconinstagram.png'
+import iconyoutube from '../../assets/images/home/iconyoutube.png'
 import Image from 'next/image'
-export default function Footer() {
+export function Footer() {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
@@ -108,6 +108,6 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }

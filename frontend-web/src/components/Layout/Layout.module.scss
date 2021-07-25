@@ -1,6 +1,11 @@
 .container{
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #EEEEEE;
+    background-color: white !important;
+    
+    .processBarLoading {
+        font-size: 0px !important;
+        position: absolute !important;
+        top: -2px !important;
+    }
 }
+

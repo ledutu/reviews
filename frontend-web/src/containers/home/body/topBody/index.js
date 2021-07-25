@@ -19,13 +19,13 @@ function TopContent(props) {
     return arr.map((item) => {
       return (
         <div key={item._id}>
-          <a>
-            <Link
-              href={{
-                pathname: `/post`,
-                query: { id: item._id },
-              }}
-            >
+          <Link
+            href={{
+              pathname: `/post`,
+              query: { id: item._id },
+            }}
+          >
+            <a>
               <div
                 className={styles.wrapperImage}
                 onClick={() => {
@@ -40,8 +40,8 @@ function TopContent(props) {
                   alt="newestContent"
                 />
               </div>
-            </Link>
-          </a>
+            </a>
+          </Link>
           <h3 className={styles.title}>{item.title}</h3>
         </div>
       );
@@ -62,19 +62,21 @@ function TopContent(props) {
               query: { id: posts[0]._id },
             }}
           >
-            <div
-              onClick={() => {
-                handleClickLink(posts[0]);
-              }}
-            >
-              <Image
-                className={styles.imageCover}
-                src={"http://api.reviewduthu.vn" + posts[0].image}
-                width="720"
-                height="405"
-                alt="newestContent"
-              />
-            </div>
+            <a>
+              <div
+                onClick={() => {
+                  handleClickLink(posts[0]);
+                }}
+              >
+                <Image
+                  className={styles.imageCover}
+                  src={"http://api.reviewduthu.vn" + posts[0].image}
+                  width="720"
+                  height="405"
+                  alt="newestContent"
+                />
+              </div>
+            </a>
           </Link>
           <div className={styles.bigContentTitle}>
             <h2 className={styles.title}>{posts[0].title}</h2>
