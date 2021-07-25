@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@badrap/bar-of-progress": "^0.1.2",
     "@zeit/next-sass": "^1.0.1",
+    "antd": "^4.16.8",
     "axios": "^0.21.1",
     "next": "11.0.1",
     "next-redux-wrapper": "^7.0.2",

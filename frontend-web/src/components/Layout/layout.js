@@ -1,13 +1,21 @@
-import React from 'react'
-import Footer from '../Footer/footer'
-import Header from '../Header/header'
+import React, { useEffect, useState } from 'react'
+import Router from 'next/router';
 import styles from './Layout.module.scss'
-export default function Layout({ children }) {
+import { Spin, Space, Progress } from 'antd';
+import { Layout as LayoutCustom, Menu, Breadcrumb } from 'antd';
+import { Header } from '../Header';
+import { Footer } from '../Footer';
+
+const { Content } = LayoutCustom;
+
+export function Layout({ children }) {
     return (
-        <div className={styles.container}>
+        <LayoutCustom className={styles.container}>
             <Header />
-            {children}
+            <Content style={{ padding: '0 50px' }}>
+                {children}
+            </Content>
             <Footer />
-        </div>
+        </LayoutCustom>
     )
 }

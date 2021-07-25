@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { pushPostToStore } from "../../../../store/actions/postAction";
-import SideBar from "../../../../components/sidebar";
+import { SideBar } from "../../../../components";
+
 function MainContent(props) {
   const dispatch = useDispatch();
   const posts = props.posts.posts;
@@ -24,20 +25,22 @@ function MainContent(props) {
               query: { id: item._id },
             }}
           >
-            <div
-              className={styles.wrapperImage}
-              onClick={() => {
-                handleClickLink(item);
-              }}
-            >
-              <Image
-                className={styles.imageCover}
-                src={item.image}
-                width="210"
-                height="112"
-                alt={item.title}
-              />
-            </div>
+            <a>
+              <div
+                className={styles.wrapperImage}
+                onClick={() => {
+                  handleClickLink(item);
+                }}
+              >
+                <Image
+                  className={styles.imageCover}
+                  src={item.image}
+                  width="210"
+                  height="112"
+                  alt={item.title}
+                />
+              </div>
+            </a>
           </Link>
           <div>
             <Link
@@ -46,14 +49,16 @@ function MainContent(props) {
                 query: { id: item._id },
               }}
             >
-              <h3
-                onClick={() => {
-                  handleClickLink(item);
-                }}
-                className={styles.titleContent}
-              >
-                {item.title}
-              </h3>
+              <a>
+                <h3
+                  onClick={() => {
+                    handleClickLink(item);
+                  }}
+                  className={styles.titleContent}
+                >
+                  {item.title}
+                </h3>
+              </a>
             </Link>
             <small className={styles.smallCategory}>{item.category.name}</small>
           </div>
