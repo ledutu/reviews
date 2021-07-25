@@ -3,13 +3,15 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
 import logo from "../../assets/images/home/logo.png";
-import home from "../../assets/images/home/home.svg";
-import clock from "../../assets/images/home/clock.svg";
-import search from "../../assets/images/home/search.svg";
-import login from "../../assets/images/home/login.svg";
-import iconlistall from "../../assets/images/home/iconlistall.png";
 import { Affix, Button, Input } from "antd";
-import { ClockCircleOutlined, HomeFilled, HomeOutlined, MenuOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  ClockCircleOutlined,
+  HomeFilled,
+  HomeOutlined,
+  MenuOutlined,
+  SearchOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 
 var today = new Date(); // Sun Dec 22 2019 13:18:01 GMT+0530 (India Standard Time)
 var date =
@@ -35,7 +37,7 @@ export function Header() {
           </Link>
 
           <div className={styles.right}>
-            <Button type="default" icon={<ClockCircleOutlined />} className="ml-10" >
+            <Button type="default" icon={<ClockCircleOutlined />} className="ml-10 test-scss" >
               Mới nhất
             </Button>
 
@@ -50,7 +52,6 @@ export function Header() {
         </div>
 
       </div>
-
 
       <Affix offsetTop={top}>
         <div className={styles.nav}>
@@ -74,6 +75,9 @@ export function Header() {
             </Link>
             <Link href="/">
               <a>Đồ gia dụng</a>
+            </Link>
+            <Link href="/">
+              <a>Nhà hàng</a>
             </Link>
             <Link href="/">
               <a>Nhà hàng</a>
