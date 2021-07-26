@@ -1,79 +1,32 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from 'antd';
+import { RelativeCardTitle, SideBar } from "../components";
+import RelativeCardChild from "../components/card/relative-card-child/relative-card-child";
 
 function Test() {
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+    const datas = [
+        {
+            title: 'Le Duc Tung Le Duc Tung Le Duc Tung',
+            image: 'https://picsum.photos/300/200?random=2',
+        },
+        {
+            title: 'Le Duc Tung Le Duc Tung Le Duc Tung 2',
+            image: 'https://picsum.photos/108/72?random=2',
+        },
+    ]
+
+    const handleOnItemClick = item => {
+        console.log(item);
+    }
 
     return (
-        <div className={["mt-20"]}>
-            <Form
-                name="basic"
-                labelCol={{
-                    span: 8,
-                }}
-                wrapperCol={{
-                    span: 16,
-                }}
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your username!',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                    name="remember"
-                    valuePropName="checked"
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+        <div className="mt-20 mb-40">
+            <SideBar
+                data={datas}
+                title="Đánh giá gần đây"
+                onItemClick={handleOnItemClick}
+            />
         </div>
     );
 }

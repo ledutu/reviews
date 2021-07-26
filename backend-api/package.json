@@ -31,6 +31,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
+    "sharp": "^0.28.3",
     "sweetalert": "^2.1.2",
     "telegraf": "^4.4.1",
     "tinymce": "^5.8.2",
