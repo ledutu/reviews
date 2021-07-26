@@ -7,6 +7,8 @@ const {
     Reaction,
     History,
 } = require('../../models');
+const fs = require('fs');
+const sharp = require('sharp');
 
 const { HTTP_STATUS, ACTION } = require('../../constant');
 
@@ -33,7 +35,7 @@ async function index(request, response) {
             reviews = reviews.where('reviewer').equals(user._id);
             totalReview = totalReview.where('reviewer').equals(user._id);
         }
-        
+
         if (_id) {
             link += '_id=' + _id + '&';
             reviews = reviews.where('_id').equals(_id);
@@ -279,10 +281,16 @@ async function getCreate(request, response) {
 
 async function uploadImageTextEditor(request, response) {
     file = request.files[0];
+    await sharp(request.files[0].path)
+        .resize(720, 405)
+        .png({ quality: 90 })
+        .toFile('./src/public/statics/uploads/users/' + request.user._id + '/reviews/' + 'resize-' + request.files[0].filename);
+
+    fs.unlinkSync(request.files[0].path);
 
     return response.status(200).json({
         status: 'OK',
-        location: '/statics/uploads/users/' + request.user._id + '/reviews/' + file.filename,
+        location: '/statics/uploads/users/' + request.user._id + '/reviews/' + 'resize-' + file.filename,
     })
 }
 
@@ -292,7 +300,15 @@ async function postCreate(request, response) {
 
         user = request.user;
         const BASE_URL = '/statics/uploads/users/' + user._id + '/reviews/';
-        const image = BASE_URL + request.files[0].filename;
+        // var path = './src/public/statics/uploads/users/'+req.user._id+'/reviews';
+        await sharp(request.files[0].path)
+            .resize(720, 405)
+            .png({ quality: 90 })
+            .toFile('./src/public/statics/uploads/users/' + user._id + '/reviews/' + 'resize-' + request.files[0].filename);
+
+        fs.unlinkSync(request.files[0].path);
+
+        const image = BASE_URL + 'resize-' + request.files[0].filename;
 
         review = new Review({
             title,
@@ -302,7 +318,7 @@ async function postCreate(request, response) {
             reviewer: user._id,
             image,
             category,
-            is_schedule: is_schedule? true: false,
+            is_schedule: is_schedule ? true : false,
             slug,
         });
 
@@ -311,9 +327,9 @@ async function postCreate(request, response) {
                 created_at = created_at.split(' ');
                 let date = created_at[0].split('/');
                 let time = created_at[1];
-                
+
                 let dateResult = new Date(`${date[2]}-${date[1]}-${date[0]} ${time}`);
-                
+
                 review.createdAt = dateResult;
             }
         }
@@ -337,7 +353,7 @@ async function postCreate(request, response) {
 
         request.session.message = {
             status: 'error',
-            content: 'Có lỗi xảy ra, vui lòng thử lại.',
+            content: error.message || 'Có lỗi xảy ra, vui lòng thử lại.',
         }
 
         return response.redirect('back');
@@ -370,7 +386,13 @@ async function postUpdate(request, response) {
         review.content = content;
 
         if (request.files.length > 0) {
-            review.image = BASE_URL + request.files[0].filename;
+            await sharp(request.files[0].path)
+                .resize(720, 405)
+                .png({ quality: 90 })
+                .toFile('./src/public/statics/uploads/users/' + user._id + '/reviews/' + 'resize-' + request.files[0].filename);
+
+            fs.unlinkSync(request.files[0].path);
+            review.image = BASE_URL + 'resize-' + request.files[0].filename;
         }
 
         History.saveHistory(user._id, ACTION.UPDATE_REVIEW, 'Cập nhật bài ' + review._id + ' thành công');
