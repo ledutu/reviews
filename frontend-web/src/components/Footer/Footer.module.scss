@@ -1,7 +1,7 @@
 .container{
     height: 323px;
-    color: #ffffff;
-    background-color: #002E46;
+    color: var(--next-color-white);
+    background-color: var(--next-color-oxford-blue);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,18 +16,25 @@
         .quickLink{
             height: 70%;
             width: 70%;
-            font-family: 'Segoe UI';
             ul{ 
                 padding: 0;
                 list-style-type: none;
                 li{
                     padding-top: 10px;
+                   
                     :hover{
                         text-decoration: underline;
                     }
                 }
             }
-            
+            span{
+                color: var(--next-color-white);
+                font-size: 18px;
+                font-weight: 600;
+            }
+            a{
+                color: var(--next-color-white);
+            }
         }
         .category{
           
@@ -36,39 +43,38 @@
            
         }
         .keepTouch{
+            height: 70%;
+            width: 70%;
+            span{
+                color: var(--next-color-white);
+                font-size: 18px;
+                font-weight: 600;
+            }
             ul{
                 list-style-type: none;
                 padding: 0;
-                li input{
-                    height: 32px;
-                    border: 1px solid #E5E5E5;
-                    border-radius: 3px;
+                li{
+                    padding-top: 10px;
                 }
             }
+
             .inputEmail{
                 display: flex;
                 flex-direction: row;
                 .submit{
-                    background-color: #1B4BA8;
-                    color: white;
+                    background-color: var(--next-color-denim-blue);
+                    color: var(--next-color-white);
                     margin-left: 3px;
                 }
-                input:hover[type="submit"] 
-                {
-                    background: white;
-                    color: black;
-                }
-                input{
+                span{
                     font-size: 14px;
-                    font-weight: 500;
-                    font-family: 'Segoe UI';
                 }
-
-
             }
             .socialContacts{
                 display: flex;
                 justify-content: space-between;
+                width: 150px;
+                margin-top: 10px;
             }
             
         }
