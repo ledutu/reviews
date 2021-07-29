@@ -29,7 +29,7 @@ export function Header() {
               <Image
                 src={logo}
                 alt="logo"
-                width={130}
+                width={150}
                 height={30}
                 quality={100}
               />
