@@ -11,7 +11,7 @@ function TopContent(props) {
   const renderSubContent = () => {
     var arr = [];
     arr.push(posts[1]);
-    //arr.push(posts[2]);
+    arr.push(posts[2]);
     if (!posts) {
       return null;
     }

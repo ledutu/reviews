@@ -22,13 +22,13 @@ function MainContent(props) {
     dispatch(pushPostToStore(item));
   };
 
-  const handleOnItemLatestClick = item => {
+  const handleOnItemLatestClick = (item) => {
     console.log(item);
-  }
+  };
 
-  const handleOnItemRatestClick = item => {
+  const handleOnItemRatestClick = (item) => {
     console.log(item);
-  }
+  };
 
   useEffect(() => {
     getLatestReview();
@@ -38,24 +38,24 @@ function MainContent(props) {
   const getLatestReview = async () => {
     try {
       setIsLatestLoading(true);
-      const response = await axios.get('/review/latest?limit=4');
+      const response = await axios.get("/review/latest?limit=4");
       setreviewLatest(response.data);
       setIsLatestLoading(false);
     } catch (error) {
       setIsLatestLoading(false);
     }
-  }
+  };
 
   const getRatestReview = async () => {
     try {
       setIsRatestLoading(true);
-      const response = await axios.get('/review/ratest?limit=4');
+      const response = await axios.get("/review/ratest?limit=4");
       setreviewRatest(response.data);
       setIsRatestLoading(false);
     } catch (error) {
       setIsRatestLoading(false);
     }
-  }
+  };
 
   const renderListOfContents = () => {
     return listOfContents.map((item) => {
@@ -77,8 +77,8 @@ function MainContent(props) {
                 <Image
                   className={styles.imageCover}
                   src={CONFIG.BASE_URL + item.image}
-                  width="210"
-                  height="112"
+                  width="210px"
+                  height="112px"
                   alt={item.title}
                 />
               </div>
