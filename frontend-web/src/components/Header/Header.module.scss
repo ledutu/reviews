@@ -4,12 +4,11 @@
     outline: none;
   }
   .information {
-    height: 70px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    font-weight: 500;
     .infoContent {
       cursor: pointer;
       width: 80%;
@@ -19,24 +18,24 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      font-family: "Segoe UI";
+      
+      .right {
+        display: flex;
+        flex-direction: row;
+      }
+      
       .search {
-        background-color: white;
         display: flex;
         justify-content: center;
         height: 32px;
         width: 238px;
-        border: 1px solid #e5e5e5;
         border-radius: 16px;
         padding-left: 10px;
         input {
           border: none;
           margin: 0px;
-          font-family: "Segoe UI";
-          font-weight: 500;
         }
         ::placeholder {
-          font-family: "Segoe UI";
           font-size: 14px;
         }
       }
@@ -69,17 +68,13 @@
   }
   .nav {
     height: 44px;
-    background-color: #0581c9;
+    background-color: var(--next-color-primary);
     display: flex;
     justify-content: center;
     align-items: center;
     .navContent {
       width: 80%;
-      color: white;
-      font-family: sans-serif;
-      font-size: 16px;
-      font-weight: 500;
-      font-family: "Segoe UI";
+      color: var(--next-color-white);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -96,4 +91,8 @@
       }
     }
   }
+}
+
+.test { 
+  color: var(--next-color-black) !important;
 }

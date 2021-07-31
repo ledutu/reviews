@@ -1,29 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "next/router";
 import { fetchPostByID } from "../../store/actions/postAction";
 import styles from "./Post.module.scss";
 import Head from "next/head";
-import SideBar from "../../components/sidebar";
 import renderHTML from "react-render-html";
 import Image from "next/image";
-//import tinymce from "tinymce";
+import { SideBar } from "../../components";
+import axios from "../../store";
 
 function Post({ router }) {
   const dispatch = useDispatch();
   const post = useSelector((state) => state.postReducer.post);
   const { id } = router.query;
+  const [reviewLatest, setreviewLatest] = useState([]);
+  const [isLatestLoading, setIsLatestLoading] = useState(true);
+
   useEffect(() => {
     if (!post._id && id) {
       // get content from API
       dispatch(fetchPostByID(id));
     }
-    // tinymce.init({
-    //   selector: `#contentID`,
-    //   content_css: "content.scss",
-    // });
     handlerHTML();
   }, [id, post]);
+
+  useEffect(() => {
+    getLatestReview();
+  }, []);
+
+  const getLatestReview = async () => {
+    try {
+      setIsLatestLoading(true);
+      const response = await axios.get('/review/latest?limit=4');
+      setreviewLatest(response.data);  
+      setIsLatestLoading(false);
+    } catch (error) {
+      setIsLatestLoading(false);
+    }
+  }
 
   const handlerHTML = () => {
     var a = document.getElementById("contentID");
@@ -39,6 +53,10 @@ function Post({ router }) {
     });
   };
   if (!post.content) return <p>Loading...!</p>;
+  
+  const handleOnItemClick = item => {
+    console.log(item);
+  }
 
   return (
     <>
@@ -57,7 +75,12 @@ function Post({ router }) {
           </div>
         </div>
         <div className={styles.postSideBar}>
-          <SideBar />
+          <SideBar
+            data={reviewLatest}
+            title="Bài viết gần đây"
+            onItemClick={handleOnItemClick}
+            isLoading={isLatestLoading}
+          />
         </div>
       </div>
     </>

@@ -3,8 +3,9 @@ info:
   title: openapi
   version: '1.0'
 servers:
-  - url: 'http://api.reviewduthu.vn/api'
   - url: 'http://localhost:4000/api'
+  - url: 'http://api.reviewduthu.vn/api'
+    description: ''
 paths:
   /auth/login:
     parameters: []
@@ -126,6 +127,64 @@ paths:
           in: query
           name: limit
           description: number of review per page
+  /review/latest:
+    get:
+      summary: get-latest
+      tags:
+        - Review
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '500':
+          $ref: '#/components/responses/500'
+      operationId: get-latest
+      description: Get all latest review
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: category_id
+          description: If category_id does not exists. Api will return all review in all category
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: number of review per page
+    parameters: []
+  /review/ratest:
+    get:
+      summary: get-review-ratest
+      tags:
+        - Review
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '500':
+          $ref: '#/components/responses/500'
+        '':
+          description: ''
+      operationId: get-review-ratest
+      description: Get ratest review
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: category_id
+          description: If category_id does not exists. Api will return all review in all category
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: number of review per page
+    parameters: []
   '/review/{id}':
     get:
       summary: get-review
