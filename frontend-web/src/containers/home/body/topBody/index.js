@@ -20,7 +20,14 @@ function TopContent(props) {
     }
 
     return arr.map((item) => {
-      return <SubContent key={item._id} item={item} styles={styles} />;
+      return (
+        <SubContent
+          key={item._id}
+          item={item}
+          styles={styles}
+          handleClickLink={handleClickLink}
+        />
+      );
     });
   };
 
