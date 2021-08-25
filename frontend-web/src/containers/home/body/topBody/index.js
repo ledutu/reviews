@@ -4,46 +4,29 @@ import styles from "./TopBody.module.scss";
 import Link from "next/link";
 import { pushPostToStore } from "../../../../store/actions/postAction";
 import { useDispatch } from "react-redux";
+import BigContent from "./components/bigContent";
+import SubContent from "./components/subContent";
 function TopContent(props) {
   const dispatch = useDispatch();
   let posts = props.posts.posts;
   if (!posts) return null;
+
   const renderSubContent = () => {
     var arr = [];
     arr.push(posts[1]);
-    //arr.push(posts[2]);
+    arr.push(posts[2]);
     if (!posts) {
       return null;
     }
 
     return arr.map((item) => {
       return (
-        <div key={item._id}>
-          <Link
-            href={{
-              pathname: `/post`,
-              query: { id: item._id },
-            }}
-          >
-            <a>
-              <div
-                className={styles.wrapperImage}
-                onClick={() => {
-                  handleClickLink(item);
-                }}
-              >
-                <Image
-                  className={styles.imageCover}
-                  src={"http://api.reviewduthu.vn" + item.image}
-                  width="300"
-                  height="160"
-                  alt="newestContent"
-                />
-              </div>
-            </a>
-          </Link>
-          <h3 className={styles.title}>{item.title}</h3>
-        </div>
+        <SubContent
+          key={item._id}
+          item={item}
+          styles={styles}
+          handleClickLink={handleClickLink}
+        />
       );
     });
   };
@@ -54,35 +37,11 @@ function TopContent(props) {
 
   return (
     <div id="topContent" className={styles.topContent}>
-      <div className={styles.bigContent}>
-        <div className={styles.wrapper}>
-          <Link
-            href={{
-              pathname: `/post`,
-              query: { id: posts[0]._id },
-            }}
-          >
-            <a>
-              <div
-                onClick={() => {
-                  handleClickLink(posts[0]);
-                }}
-              >
-                <Image
-                  className={styles.imageCover}
-                  src={"http://api.reviewduthu.vn" + posts[0].image}
-                  width="720"
-                  height="405"
-                  alt="newestContent"
-                />
-              </div>
-            </a>
-          </Link>
-          <div className={styles.bigContentTitle}>
-            <h2 className={styles.title}>{posts[0].title}</h2>
-          </div>
-        </div>
-      </div>
+      <BigContent
+        handleClickLink={handleClickLink}
+        post={posts[0]}
+        styles={styles}
+      />
       <div className={styles.subContent}>{renderSubContent()}</div>
     </div>
   );

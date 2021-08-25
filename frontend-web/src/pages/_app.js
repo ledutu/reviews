@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { createWrapper } from "next-redux-wrapper";
 import store from "../store/store";
 import "./../scss/main.scss";
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import ProgressBar from "@badrap/bar-of-progress";
 import { Router } from "next/router";
 import { Layout } from "../components";
@@ -30,7 +30,9 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-const makeStore = () => store;
-const wrapper = createWrapper(makeStore);
+// const makeStore = () => store;
+// const wrapper = createWrapper(makeStore);
 
-export default wrapper.withRedux(MyApp);
+// export default wrapper.withRedux(MyApp);
+
+export default MyApp;
