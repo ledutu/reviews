@@ -8,6 +8,7 @@ var review = require('./review.route');
 var user = require('./user.route');
 var config = require('./config.route');
 var category = require('./category.route');
+const {Answer} = require('../models/answer.modal')
 
 var { Telegraf } = require('telegraf');
 
@@ -22,17 +23,16 @@ router.use('/user', user);
 router.use('/config', config)
 router.use('/category', category);
 
-router.post('/sendMessage', function (request, response) {
+router.post('/sendMessage', async function (request, response) {
     try {
         let text = request.body.message;
-        console.log(text);
-        bot.telegram.sendMessage(
-            -581108899,
-            text,
-        );
+        let answer = new Answer();
+        answer.text = text;
+        await answer.save()
+
         return response.json({
             status: 'OK',
-        });    
+        });  
     } catch (error) {
         console.log(error);
         return response.json({
@@ -40,6 +40,15 @@ router.post('/sendMessage', function (request, response) {
         });    
     }
     
+})
+
+router.get('/answer', async function(request, response) {
+    try {
+        const answer = await Answer.find({}, {}, {sort: {createdAt: -1}});
+        response.send(answer);
+    } catch(error) {
+        response.send(error)
+    }
 })
 
 module.exports = router;
